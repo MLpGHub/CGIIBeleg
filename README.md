@@ -1,3 +1,6 @@
 # CGIIBeleg
-Hier wird die Fertigstellung unseres Beleges für das Modul Computergrafik II realisiert
-Emanuel war hier und hat was edited.
+Hier wird die Fertigstellung unseres Beleges für das Modul Computergrafik II realisiert.
+
+## Aufgabenstellung
+
+Die Aufgabenstellung findet sich in der Datei "Belegaufgaben.pdf".
