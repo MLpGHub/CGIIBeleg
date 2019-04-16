@@ -88,11 +88,11 @@ public class LineareAlgebra {
 	}
 	
 	public static double euklDistance(Vektor2D v1, Vektor2D v2) {
-
+		return Math.sqrt((v1.x-v2.x)*(v1.x-v2.x) + (v1.y-v2.y)*(v1.y-v2.y));
 	}
 	
 	public static double euklDistance(Vektor3D v1, Vektor3D v2) {
-
+		return Math.sqrt((v1.x-v2.x)*(v1.x-v2.x) + (v1.y-v2.y)*(v1.y-v2.y) + (v1.z-v2.z)*(v1.z-v2.z));
 	}
 
 	public static double manhattenDistance(Vektor2D v) {
@@ -126,20 +126,24 @@ public class LineareAlgebra {
 	public static double cosEquation(Vektor3D v1, Vektor3D v2) {
 		return dotProduct(v1, v2) / (length(v1) * length(v2));
 	}
-
+	
+	/*
 	public static double sinEquation(Vektor2D v1, Vektor2D v2) {
 		//return determinante(crossProduct(v1, v2)) / (length(v1) * length(v2));
+		
+		sin(alpha) = len(crossProduct(v1, v2)) / (length(v1) * length(v2));
 	}
+	*/
 	
-	public static double sinEquation(Vektor3D v1, Vektor3D v2) {// der Sinus des Winkel
-
+	public static double sinEquation(Vektor3D v1, Vektor3D v2) {/
+		return len(crossProduct(v1, v2)) / (length(v1) * length(v2));
 	}
 
-	public static double angleRad(Vektor2D v1, Vektor2D v2) {// der Winkel in Rad
+	public static double angleRad(Vektor2D v1, Vektor2D v2) {
 		return Math.acos(cosEquation(v1, v2));
 	}
 	
-	public static double angleRad(Vektor3D v1, Vektor3D v2) {// der Winkel in Rad
+	public static double angleRad(Vektor3D v1, Vektor3D v2) {
 		return Math.acos(cosEquation(v1, v2));
 	}
 
@@ -159,24 +163,32 @@ public class LineareAlgebra {
 		return (ang * Math.PI) / 180;
 	}
 
-	public static void determinante(Vektor2D v1, Vektor2D v2) {
-
+	public static double determinante(Vektor2D v1, Vektor2D v2) {
+		return v1.x * v2.y - v1.y * v2.x; //??
 	}
 	
-	public static void determinante(Vektor3D v1, Vektor3D v2, Vektor3D v3) {
-
+	public static double determinante(Vektor3D v1, Vektor3D v2, Vektor3D v3) {
+		double a = v1.x * v2.y * v3.z;
+		double b = v2.x * v3.y * v1.z;
+		double c = v3.x * v1.y * v2.z;
+		double d = v1.z * v2.y * v3.x;
+		double e = v2.z * v3.y * v1.x;
+		double e = v3.z * v1.y * v2.x;
+		return a + b + c - d - e - f; //??
 	}
 
-	public static void abs(Vektor2D v) { // double ?
-
+	public static double abs(double d) throws Exception { // double ?
+		if (d == Double.MIN_VALUE) throw new Exception("nicht darstellbar");
+		if (d < 0) d = -d;
+		return d;
 	}
 
 	public static void show(Vektor2D v) {
-
+		System.out.println("Vektor2D ["+v.x+", "+v.y+"]");
 	}
 	
 	public static void show(Vektor3D v) {
-
+		System.out.println("Vektor3D ["+v.x+", "+v.y+", "+v.z+"]");
 	}
 
 

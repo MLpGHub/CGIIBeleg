@@ -171,17 +171,17 @@ class LineareAlgebraTest {
 	}
 	
 	@Test
-	void euklDistance2DLACalcTest() { //parallelität?
+	void euklDistance2DLACalcTest() {
 		Vektor2D v1 = new Vektor2D(2, 3);
-		Vektor2D v2 = new Vektor2D(2, 3);
-		assert(?? == euklDistance(v1, v2));
+		Vektor2D v2 = new Vektor2D(5, 7);
+		assert(5.0 == euklDistance(v1, v2));
 	}
 	
 	@Test
-	void euklDistance3DLACalcTest() { //windschief?
-		Vektor3D v1 = new Vektor3D(2, 3);
-		Vektor3D v2 = new Vektor3D(2, 3);
-		assert(?? == euklDistance(v1, v2));
+	void euklDistance3DLACalcTest() {
+		Vektor3D v1 = new Vektor3D(2, 3, 9);
+		Vektor3D v2 = new Vektor3D(5, 7, 9);
+		assert(5.0 == euklDistance(v1, v2));
 	}
 	
 	@Test
@@ -247,12 +247,14 @@ class LineareAlgebraTest {
 		assert(0.0 == cosEquation(v1, v2));
 	}
 	
+	/*
 	@Test
 	void sinEqu2DLACalcTest() {
 		Vektor2D v1 = new Vektor2D(4, 0);
 		Vektor2D v2 = new Vektor2D(0, 4);
 		assert(1.0 == sinEquation(v1, v2));
 	}
+	*/
 	
 	@Test
 	void sinEqu3DLACalcTest() {
@@ -298,4 +300,63 @@ class LineareAlgebraTest {
 	void degreeToRadCalcTest() {
 		assert(0.25 == degreeToRad(90));
 	}
-}
+	
+	@Test
+	void det2DCalcTest() {
+		Vektor2D v1 = new Vektor2D(2, 4);
+		Vektor2D v2 = new Vektor2D(4, 6);
+		assert(-4.0 == determinante(v1, v2));
+	}
+	
+	@Test
+	void det3DCalcTest() {
+		Vektor3D v1 = new Vektor3D(2, 4, 2);
+		Vektor3D v2 = new Vektor3D(4, 6, 1);
+		Vektor3D v3 = new Vektor3D(5, 2, 4);
+		assert(-44.0 == determinante(v1, v2, v3));
+	}
+	
+	@Test
+	void absCalcPosTest() {
+		double d = 7;
+		try {
+			assert(7.0 == abs(d));
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	@Test
+	void absCalcNegTest() {
+		double d = -7;
+		try {
+			assert(7.0 == abs(d));
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	@Test (expected = Exception.class)
+	void absCalcMinValTest() throws Exception {
+		double d = Double.MIN_VALUE;
+		abs(d);
+		//fail("Exception not thrown.");
+	}
+	
+	@Test
+	void show2DTest() {
+		PrintStream p = new PrintStream();
+		System.out.setOut(p);
+		show(new Vektor2D(1, 2));
+		String s = "Vektor2D [1, 2]";
+		assert(s == p.toString());
+	}
+	
+	@Test
+	void show3DTest() {
+		PrintStream p = new PrintStream();
+		System.out.setOut(p);
+		show(new Vektor3D(1, 2, 3));
+		String s = "Vektor2D [1, 2, 3]";
+		assert(s == p.toString());
+	}
