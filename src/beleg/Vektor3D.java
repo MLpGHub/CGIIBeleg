@@ -54,10 +54,7 @@ public class Vektor3D {
 	 */
 	@Test
 	public boolean isNullVector() {
-		if ((this.x == 0) && (this.y == 0) && (this.z == 0))
-			return true;
-		else
-			return false;
+		return (this.x == 0) && (this.y == 0) && (this.z == 0);
 	}
 
 	/**
@@ -137,10 +134,7 @@ public class Vektor3D {
 	 */
 	@Test
 	public boolean isEqual(Vektor3D v) {
-		if ((this.x == v.x) && (this.y == v.y) && (this.z == v.z)) {
-			return true;
-		}
-		return false;
+		return (this.x == v.x) && (this.y == v.y) && (this.z == v.z);
 	}
 
 	/**
@@ -170,10 +164,10 @@ public class Vektor3D {
 	 * @throws Exception
 	 */
 	@Test
-	public void normalize() throws Exception {
+	public void normalize() {
 		double len = length();
 		if (len == 0) {
-			throw new Exception("Division durch Null (L�nge=0)");
+			return;
 		}
 		this.x /= len;
 		this.y /= len;
