@@ -1,0 +1,22 @@
+gitk graphisch
+
+git add name.txt
+git commit -a -m
+
+git branch <name>
+
+git merge test2
+
+
+
+
+verknüpfung mit github
+git remote aadd origin <quelle>
+abgleich
+git push -u -origin master
+
+
+www.htw-dresden.de/~jvogt -> it 2 -> beleg auf github -> git nd
+
+
+jetBrains Webstorm --> studentenaccount

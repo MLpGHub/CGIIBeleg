@@ -1,0 +1,35 @@
+Git in einem Ordner initialisieren
+$ git init
+
+config-Daten hinterlegen (--global für globale Einstellung)
+$ git config user.email "abc@def.de"
+$ git config user.name "User Name"
+
+Dateien zur Verwaltung hinzufügen
+$ git add <filepath>
+$ git add . (fügt alle Daten im Verzeichnis hinzu)
+
+Commit
+$ git commit -m "message"
+
+Status anzeigen
+$ git status
+
+Commits anzeigen
+$ git log
+$ git log --graph (zeigt ASCII-Graphen an)
+
+zu früherem Status wechseln (erzeugt neuen tmp-HEAD)
+$ git checkout <7-stellen hash>
+
+zu anderem Branch wechseln
+$ git checkout <branch-name>
+
+Branches anzeigen
+$ git branch
+
+Branch erstellen
+$ git checkout -b <new-branch-name>
+
+Branch löschen
+$ git branch -d <branch-name>
