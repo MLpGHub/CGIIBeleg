@@ -11,3 +11,11 @@ Hier im Beispiel hat d1 einen Wert von 1,...E308 (oder ähnlich). Da nur ein seh
 Eine Lösung dieses Problems liegt ausschließlich darin, den auftretenden Fehler durch geeignete Berechnungen zu erkennen und auszugeben.
 
 Für die Berechnungen könnte die Größe des Exponentes sowie die Speichergröße der Mantisse (bzw. die von double) hilfreich sein.
+
+**********************************************************************
+
+-> eigentlich müsste jegliche Berechnung mit doubles vorher überprüft werden
+
+**********************************************************************
+
+LyX-Version Emanuel Xubuntu: 2.2.3

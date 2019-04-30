@@ -151,7 +151,7 @@ public class Vektor2D {
 	 */
 	@Test
 	public boolean isEqual(Vektor2D v) {
-		return ((this.x == 0) && (this.y == 0));
+		return ((this.x == v.x) && (this.y == v.y));
 	}
 
 	/**

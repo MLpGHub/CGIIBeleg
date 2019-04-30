@@ -1,4 +1,0 @@
-- euklDistanz ??
-- sinEquation nur 3D?
-- determinante ??
-- abs von double ??
