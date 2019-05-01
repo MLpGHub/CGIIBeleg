@@ -23,5 +23,7 @@
 hs_err_pid*
 
 # Eclipse Workspace Metadata
-.metadata
-.metadata/*
+CGIIBeleg/.metadata
+CGIIBeleg/.metadata/*
+CGIIBeleg.old/.metadata
+CGIIBeleg.old/.metadata/*

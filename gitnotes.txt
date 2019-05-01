@@ -33,3 +33,17 @@ $ git checkout -b <new-branch-name>
 
 Branch löschen
 $ git branch -d <branch-name>
+
+Repo von Server holen
+$ git pull <weblink>
+
+Änderungen zu Server schicken
+$ git push <weblink> <branch-name>
+
+Commits verwerfen
+$ git reset --hard <früherer-commit-hash>
+
+Commits verwerfen, aber nicht-committete (?) Änderungen behalten
+$ git stash
+$ git reset --hard <früherer-commit-hash>
+$ git stash pop
