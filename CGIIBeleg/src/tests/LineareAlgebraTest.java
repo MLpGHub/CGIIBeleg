@@ -1,10 +1,15 @@
-package beleg;
+package tests;
 
 //uses JUnit 4
 
 //import static org.junit.jupiter.api.Assertions.*;
 //import org.junit.jupiter.api.Test;
 import org.junit.Test;
+
+import beleg.LineareAlgebra;
+import beleg.Vektor2D;
+import beleg.Vektor3D;
+
 import static org.junit.Assert.*;
 
 import java.io.*;

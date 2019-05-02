@@ -311,7 +311,125 @@ JUnit 4
 \end_layout
 
 \begin_layout Subsection
+Klasse abcd
+\end_layout
+
+\begin_layout Standard
+voll die krasse Wrapper-Class für Berechnungen mit double in Java.
+ Die ist sehr effizient! ;-)
+\end_layout
+
+\begin_layout Subsection
 Klasse Vektor2D
+\end_layout
+
+\begin_layout Standard
+Um den Zugriff auf die Variablen zu vereinfachen, wurden hier auf die get-
+ und set-Methoden verzichtet:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color[rgb]{0.702,1,0.5059}},frame=single,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+public class Vektor2D {
+\end_layout
+
+\begin_layout Plain Layout
+
+	public double x, y;
+\end_layout
+
+\begin_layout Plain Layout
+
+	...
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Verschachtelte Konstrukturen wurden angelegt, um Redundanz zu vermeiden:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color{lightergray}},frame=single,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+public Vektor2() {
+\end_layout
+
+\begin_layout Plain Layout
+
+	this(0, 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+public Vektor3D(double x, double y) {
+\end_layout
+
+\begin_layout Plain Layout
+
+	this.x = x;
+\end_layout
+
+\begin_layout Plain Layout
+
+	this.y = y;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+public Vektor2D(Vektor2D src) {
+\end_layout
+
+\begin_layout Plain Layout
+
+	this(src.x, src.y);
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
@@ -334,7 +452,153 @@ normalize()
 \end_layout
 
 \begin_layout Standard
+Die Normierung eines Vektors lässt sich wiefolgt beschreiben:
+\begin_inset Formula 
+\[
+norm(p)=\left(\begin{array}{c}
+p_{x}/len(p)\\
+p_{y}/len(p)
+\end{array}\right);len(p)=\sqrt{p_{x}^{2}+p_{y}^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Erster Test:
+\end_layout
+
+\begin_layout Standard
 \begin_inset listings
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color{lightergray}},frame=single,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+public void normalizeCalculation2DTest() {
+\end_layout
+
+\begin_layout Plain Layout
+
+	Vektor2D v = new Vektor2D(3, 4);
+\end_layout
+
+\begin_layout Plain Layout
+
+	v.normalize();
+\end_layout
+
+\begin_layout Plain Layout
+
+	assert(v.x == 3/5.);
+\end_layout
+
+\begin_layout Plain Layout
+
+	assert(v.y == 4/5.);
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Daraufhin entwickelter Code:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color{lightergray}},frame=single,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+public void normalize() {
+\end_layout
+
+\begin_layout Plain Layout
+
+	this.x = this.x / length();
+\end_layout
+
+\begin_layout Plain Layout
+
+	this.y = this.y / length();
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Dann getestet mit folgendem Test:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color{lightergray}},frame=single,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+public void normalizeLengthNull2DTest() {
+\end_layout
+
+\begin_layout Plain Layout
+
+	Vektor2D v = new Vektor2D(0, 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+	v.normalize();
+\end_layout
+
+\begin_layout Plain Layout
+
+	assert(v.x == 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+	assert(v.y == 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Auftauchende Probleme bei len = 0.
+ -> wenn beide Komponenten null sind
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color{lightergray}},frame=single,xleftmargin=15pt"
 inline false
 status open
 
@@ -383,238 +647,12 @@ public void normalize() {
 
 \end_layout
 
-\begin_layout Standard
-Die Manhatten Distance lässt sich mittels eine symbolischen Skizze (Abb.1)
- gut veranschaulichen.
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-norm(p)=\left(\begin{array}{c}
-p_{x}/len(p)\\
-p_{y}/len(p)\\
-p_{z}/len(p)
-\end{array}\right)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-Ausgewählte Methode: normalizeCalculation2DTest()
-\end_layout
-
-\begin_layout Standard
-Die Methode 
-\begin_inset Quotes gld
-\end_inset
-
-normalizeCalculation2DTest
-\begin_inset Quotes grd
-\end_inset
-
- ist beispielhaft für den Weg der allgemeinen Exceptionüberprüfung, den
- wir gewählt haben.
- In simplen aber präzisen try/catch- Anweisungen fangen wir übliche Fehlerquelle
-n ab und teilen sie dem Anwender mit.
-\end_layout
-
-\begin_layout Standard
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-@Test 	
-\end_layout
-
-\begin_layout Plain Layout
-
-void normalizeCalculation2DTest() { 		
-\end_layout
-
-\begin_layout Plain Layout
-
-	Vektor2D v = new Vektor2D(1, 4); 		
-\end_layout
-
-\begin_layout Plain Layout
-
-	try { 			
-\end_layout
-
-\begin_layout Plain Layout
-
-		v.normalize();
-\end_layout
-
-\begin_layout Plain Layout
-
-	}catch (Exception e) {
-\end_layout
-
-\begin_layout Plain Layout
-
-		System.out.println(e.getMessage());
-\end_layout
-
-\begin_layout Plain Layout
-
-		assert(false); 
-\end_layout
-
-\begin_layout Plain Layout
-
-	 } 
-\end_layout
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Subsection
 Klasse Vektor3D
 \end_layout
 
 \begin_layout Standard
-Um den Zugriff auf die Variablen zu vereinfachen, wurden hier auf die get-
- und set-Methoden verzichtet:
-\end_layout
-
-\begin_layout Standard
-\begin_inset listings
-lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},showstringspaces=false,tabsize=3,backgroundcolor={\color{lightergray}},frame=single,xleftmargin=15pt"
-inline false
-status open
-
-\begin_layout Plain Layout
-
-public class Vektor3D {
-\end_layout
-
-\begin_layout Plain Layout
-
-	public double x, y, z;
-\end_layout
-
-\begin_layout Plain Layout
-
-	...
-\end_layout
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Verschachtelte Konstrukturen wurden angelegt, um Redundanz zu vermeiden:
-\end_layout
-
-\begin_layout Standard
-\begin_inset listings
-lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},showstringspaces=false,tabsize=3,backgroundcolor={\color{lightergray}},frame=single,xleftmargin=15pt"
-inline false
-status open
-
-\begin_layout Plain Layout
-
-	public Vektor3D() {
-\end_layout
-
-\begin_layout Plain Layout
-
-		this(0, 0, 0);
-\end_layout
-
-\begin_layout Plain Layout
-
-	}
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-	public Vektor3D(double x, double y, double z) {
-\end_layout
-
-\begin_layout Plain Layout
-
-		this.x = x;
-\end_layout
-
-\begin_layout Plain Layout
-
-		this.y = y;
-\end_layout
-
-\begin_layout Plain Layout
-
-		this.z = z;
-\end_layout
-
-\begin_layout Plain Layout
-
-	}
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-	public Vektor3D(Vektor3D src) {
-\end_layout
-
-\begin_layout Plain Layout
-
-		this(src.x, src.y, src.z);
-\end_layout
-
-\begin_layout Plain Layout
-
-	}
-\end_layout
-
-\end_inset
-
-
+Vereinfachungen äquivalent zu Vektor2D.
 \end_layout
 
 \begin_layout Subsubsection
@@ -633,76 +671,11 @@ status open
 
 \begin_layout Plain Layout
 
-public static float length(Vektor3D vec){
+sub-code
 \end_layout
 
 \begin_layout Plain Layout
 
-   return (float)Math.sqrt(vec.x*vec.x + vec.y*vec.y + vec.z*vec.z);
-\end_layout
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsubsection
-Ausgewählte Methode: subUnderflow3DTest()
-\end_layout
-
-\begin_layout Standard
-Diese Funktion testet das Verhalten der Vektor3D Klasse bei dem untererschreiten
- der minimal möglichen Wertannahme (Double.MIN_Value).
- Sie gibt ausschlus darüber ob und wie wir mit einem möglicheweiße auftretenden
- 
-\begin_inset Quotes gld
-\end_inset
-
-Wrap-Around
-\begin_inset Quotes grd
-\end_inset
-
- umgehen würden.
-\end_layout
-
-\begin_layout Standard
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-@Test(expected = Exception.class) 	
-\end_layout
-
-\begin_layout Plain Layout
-
-void subUnderflow3DTest() throws Exception { 		
-\end_layout
-
-\begin_layout Plain Layout
-
-	Vektor3D v = new Vektor3D(Double.MIN_VALUE, Double.MIN_VALUE,Double.MIN_VALUE);
- 
-\end_layout
-
-\begin_layout Plain Layout
-
-	v.sub(v); 	
-\end_layout
-
-\begin_layout Plain Layout
-
-}
 \end_layout
 
 \end_inset
@@ -715,7 +688,317 @@ Lineare Algebra
 \end_layout
 
 \begin_layout Subsubsection
-Ausgewählte Methode: asd
+Ausgewählte Methode: abs() für Vektor3D
+\end_layout
+
+\begin_layout Standard
+Diese Methode erhält als Parameter einen Vektor3D und gibt ihn so zurück,
+ dass negative Komponenten als positive dargestellt werden.
+ Positive Komponenten bleiben unberührt.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "backgroundcolor={\color{lightergray}},basicstyle={\scriptsize\ttfamily},frame=single,language=Java,numbers=left,showstringspaces=false,tabsize=3,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+@Test
+\end_layout
+
+\begin_layout Plain Layout
+
+public void absCalc3DPosTest() {
+\end_layout
+
+\begin_layout Plain Layout
+
+	try {
+\end_layout
+
+\begin_layout Plain Layout
+
+		Vektor3D v1 = new Vektor3D(4, -2, 2);
+\end_layout
+
+\begin_layout Plain Layout
+
+		Vektor3D v2 = LineareAlgebra.abs(v1);
+\end_layout
+
+\begin_layout Plain Layout
+
+		assert (v2.x == 4.0);
+\end_layout
+
+\begin_layout Plain Layout
+
+		assert (v2.y == 2.0);
+\end_layout
+
+\begin_layout Plain Layout
+
+		assert (v2.y == 2.0);
+\end_layout
+
+\begin_layout Plain Layout
+
+	} catch (Exception e) {
+\end_layout
+
+\begin_layout Plain Layout
+
+		System.out.println(e);
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+@Test(expected=Exception.class)
+\end_layout
+
+\begin_layout Plain Layout
+
+public void absCalc3DNegTest() throws Exception {
+\end_layout
+
+\begin_layout Plain Layout
+
+	Vektor3D v1 = new Vektor3D(4, Double.MIN_VALUE, 2);
+\end_layout
+
+\begin_layout Plain Layout
+
+	Vektor3D v2 = LineareAlgebra.abs(v1);
+\end_layout
+
+\begin_layout Plain Layout
+
+	assert (v2.x == 4.0);
+\end_layout
+
+\begin_layout Plain Layout
+
+	assert (v2.y == 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+	assert (v2.z == 2.0);
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "backgroundcolor={\color{lightergray}},basicstyle={\scriptsize\ttfamily},frame=single,language=Java,numbers=left,showstringspaces=false,tabsize=3,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+public static Vektor3D abs(Vektor3D vsrc) throws Exception {
+\end_layout
+
+\begin_layout Plain Layout
+
+	Vektor3D v = new Vektor3D(vsrc);
+\end_layout
+
+\begin_layout Plain Layout
+
+	if ((v.x == Double.MIN_VALUE) || (v.y == Double.MIN_VALUE) || (v.z == Double.MIN_VALU
+E))
+\end_layout
+
+\begin_layout Plain Layout
+
+		throw new Exception("nicht darstellbar");
+\end_layout
+
+\begin_layout Plain Layout
+
+	if (v.x < 0)
+\end_layout
+
+\begin_layout Plain Layout
+
+		v.x = -v.x;
+\end_layout
+
+\begin_layout Plain Layout
+
+	if (v.y < 0)
+\end_layout
+
+\begin_layout Plain Layout
+
+		v.y = -v.y;
+\end_layout
+
+\begin_layout Plain Layout
+
+	if (v.z < 0)
+\end_layout
+
+\begin_layout Plain Layout
+
+		v.z = -v.z;
+\end_layout
+
+\begin_layout Plain Layout
+
+	return v;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Ausgewählte Methode: crossProduct() für Vektor3D
+\end_layout
+
+\begin_layout Standard
+Bildet den orthogonalen Vektor zu den beiden gegebenen und gibt diesen zurück.
+ Berechnungsvorschrift:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+asdasdsa
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "backgroundcolor={\color{lightergray}},basicstyle={\scriptsize\ttfamily},frame=single,language=Java,numbers=left,showstringspaces=false,tabsize=3,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+@Test
+\end_layout
+
+\begin_layout Plain Layout
+
+public void crossProd3DLACalcTest() {
+\end_layout
+
+\begin_layout Plain Layout
+
+	Vektor3D v1 = new Vektor3D(1, 0, 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+	Vektor3D v2 = new Vektor3D(0, 1, 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+	Vektor3D v3 = LineareAlgebra.crossProduct(v1, v2);
+\end_layout
+
+\begin_layout Plain Layout
+
+	assert (v3.x == 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+	assert (v3.y == 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+	assert (v3.z == 1);
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "backgroundcolor={\color{lightergray}},basicstyle={\scriptsize\ttfamily},frame=single,language=Java,numbers=left,showstringspaces=false,tabsize=3,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+public static Vektor3D crossProduct(Vektor3D v1, Vektor3D v2) {
+\end_layout
+
+\begin_layout Plain Layout
+
+	double x = v1.y * v2.z - v1.z * v2.y;
+\end_layout
+
+\begin_layout Plain Layout
+
+	double y = v1.z * v2.x - v1.x * v2.z;
+\end_layout
+
+\begin_layout Plain Layout
+
+	double z = v1.x * v2.y - v1.y * v2.x;
+\end_layout
+
+\begin_layout Plain Layout
+
+	return new Vektor3D(x, y, z);
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Bibliography

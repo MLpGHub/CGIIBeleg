@@ -1,6 +1,8 @@
 package beleg;
 
 public class LineareAlgebra {
+	private LineareAlgebra() {	}
+	
 	public static Vektor2D add(Vektor2D v1, Vektor2D v2) throws Exception {
 		Vektor2D v = new Vektor2D(v1);
 		v.add(v2);

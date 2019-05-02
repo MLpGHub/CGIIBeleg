@@ -1,10 +1,13 @@
-package beleg;
+package tests;
 
 //uses JUnit 4
 
 //import static org.junit.jupiter.api.Assertions.*;
 //import org.junit.jupiter.api.Test;
 import org.junit.Test;
+
+import beleg.Vektor2D;
+
 import static org.junit.Assert.*;
 
 //import org.junit.Rule;
