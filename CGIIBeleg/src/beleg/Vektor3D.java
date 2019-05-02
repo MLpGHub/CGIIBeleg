@@ -24,6 +24,7 @@ public class Vektor3D {
 	public Vektor3D(double x, double y, double z) {
 		this.x = x;
 		this.y = y;
+		this.z = z;
 	}
 
 	/**
@@ -65,8 +66,8 @@ public class Vektor3D {
 	 */
 	@Test
 	public void add(Vektor3D v) throws Exception {
-		if ((Double.MAX_VALUE - v.x < this.x) && (Double.MAX_VALUE - v.y < this.y)
-				&& (Double.MAX_VALUE - v.z < this.z)) {
+		if ((Double.MAX_VALUE - v.x < this.x) || (Double.MAX_VALUE - v.y < this.y)
+				|| (Double.MAX_VALUE - v.z < this.z)) {
 			throw new Exception("Double Wraparound");
 		}
 		this.x += v.x;
@@ -83,8 +84,8 @@ public class Vektor3D {
 	@Test
 	public void sub(Vektor3D v) throws Exception {
 		if ((Double.MAX_VALUE - Math.abs(v.x) < Math.abs(this.x))
-				&& (Double.MAX_VALUE - Math.abs(v.y) < Math.abs(this.y))
-				&& (Double.MAX_VALUE - Math.abs(v.z) < Math.abs(this.z))) {
+				|| (Double.MAX_VALUE - Math.abs(v.y) < Math.abs(this.y))
+				|| (Double.MAX_VALUE - Math.abs(v.z) < Math.abs(this.z))) {
 			throw new Exception("Double Wraparound");
 		}
 		this.x -= v.x;
@@ -101,7 +102,7 @@ public class Vektor3D {
 	@Test
 	public void mult(double d) throws Exception {
 		double div = Double.MAX_VALUE / d;
-		if ((div > this.x) && (div > this.y) && (div > this.z)) {
+		if ((div < this.x) || (div < this.y) || (div < this.z)) {
 			throw new Exception("Double Wraparound");
 		}
 		this.x *= d;

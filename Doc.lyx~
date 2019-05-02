@@ -412,7 +412,7 @@ norm(p)=\left(\begin{array}{c}
 p_{x}/len(p)\\
 p_{y}/len(p)\\
 p_{z}/len(p)
-\end{array}\right);len(p)=\sqrt{p_{x}^{2}+p_{y}^{2}+p_{z}^{2}}
+\end{array}\right)
 \]
 
 \end_inset

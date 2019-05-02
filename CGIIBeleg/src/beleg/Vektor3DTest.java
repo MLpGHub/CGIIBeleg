@@ -124,7 +124,7 @@ public class Vektor3DTest {
 		Vektor3D v1 = new Vektor3D(1, 4, 1);
 		Vektor3D v2 = new Vektor3D(4, 4, 3);
 		boolean vEq = v1.isNotEqual(v2);
-		assertFalse(vEq);
+		assertTrue(vEq);
 	}
 
 	@Test
@@ -132,7 +132,7 @@ public class Vektor3DTest {
 		Vektor3D v1 = new Vektor3D(1, 4, 1);
 		Vektor3D v2 = new Vektor3D(1, 4, 1);
 		boolean vEq = v1.isNotEqual(v2);
-		assertTrue(vEq);
+		assertFalse(vEq);
 	}
 
 	@Test

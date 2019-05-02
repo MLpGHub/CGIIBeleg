@@ -53,8 +53,8 @@ public class Vektor2DTest {
 	
 	@Test
 	public void subSubtraction2DTest() {
-		Vektor2D v1 = new Vektor2D(1, 4);
-		Vektor2D v2 = new Vektor2D(2, 4);
+		Vektor2D v1 = new Vektor2D(3, 4);
+		Vektor2D v2 = new Vektor2D(5, 4);
 		try {
 			v1.sub(v2);
 		} catch (Exception e) {
@@ -65,8 +65,9 @@ public class Vektor2DTest {
 	
 	@Test (expected=Exception.class)
 	public void subUnderflow2DTest() throws Exception {
-		Vektor2D v = new Vektor2D(Double.MIN_VALUE, Double.MIN_VALUE);
-		v.sub(v); // Exception
+		Vektor2D v1 = new Vektor2D(Double.MIN_VALUE, Double.MIN_VALUE);
+		Vektor2D v2 = new Vektor2D(5, 5);
+		v1.sub(v2); // Exception
 	}
 
 	@Test
@@ -124,15 +125,15 @@ public class Vektor2DTest {
 		Vektor2D v1 = new Vektor2D(1, 4);
 		Vektor2D v2 = new Vektor2D(4, 4);
 		boolean vEq = v1.isNotEqual(v2);
-		assertFalse(vEq);
+		assertTrue(vEq);
 	}
 	
 	@Test
 	public void isNotEqualNegativ2DTest() {
 		Vektor2D v1 = new Vektor2D(1, 4);
-		Vektor2D v2 = new Vektor2D(4, 1);
+		Vektor2D v2 = new Vektor2D(1, 4);
 		boolean vEq = v1.isNotEqual(v2);
-		assertTrue(vEq);
+		assertFalse(vEq);
 	}
 	
 	@Test

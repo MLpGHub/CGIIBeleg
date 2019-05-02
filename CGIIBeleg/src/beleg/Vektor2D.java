@@ -64,7 +64,7 @@ public class Vektor2D {
 	 */
 	@Test
 	public void add(Vektor2D v) throws Exception {
-		if ((Double.MAX_VALUE - v.x < this.x) && (Double.MAX_VALUE - v.y < this.y)) {
+		if ((Double.MAX_VALUE - v.x < this.x) || (Double.MAX_VALUE - v.y < this.y)) {
 			throw new Exception("Double Wraparound");
 		}
 		this.x += v.x;
@@ -85,8 +85,10 @@ public class Vektor2D {
 	 */
 	@Test
 	public void sub(Vektor2D v) throws Exception {
-		if ((Double.MAX_VALUE - Math.abs(v.x) < Math.abs(this.x))
-				&& (Double.MAX_VALUE - Math.abs(v.y) < Math.abs(this.y))) {
+		System.out.println("Double.MIN_VALUE + Math.abs(v.x)=" + (Double.MIN_VALUE + Math.abs(v.x)));
+		System.out.println("(Double.MIN_VALUE + Math.abs(v.y) > this.y) =" + (Double.MIN_VALUE + Math.abs(v.y) > this.y));
+		if ((Double.MIN_VALUE + Math.abs(v.x) > this.x)
+				|| (Double.MIN_VALUE + Math.abs(v.y) > this.y)) {
 			throw new Exception("Double Wraparound");
 		}
 		this.x -= v.x;
@@ -108,7 +110,7 @@ public class Vektor2D {
 	@Test
 	public void mult(double d) throws Exception {
 		double div = Double.MAX_VALUE / d;
-		if ((div > this.x) && (div > this.y)) {
+		if ((div < this.x) || (div < this.y)) {
 			throw new Exception("Double Wraparound");
 		}
 		this.x *= d;
