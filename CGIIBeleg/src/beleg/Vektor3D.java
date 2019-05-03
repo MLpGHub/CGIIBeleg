@@ -37,7 +37,7 @@ public class Vektor3D {
 	}
 
 	/**
-	 * Belegt den Vektor in 3D mit den Ã¼bergebenen Werten
+	 * Belegt den Vektor in 3D mit den übergebenen Werten
 	 * 
 	 * @param x
 	 * @param y
@@ -50,7 +50,7 @@ public class Vektor3D {
 	}
 
 	/**
-	 * Ã¼berprÃ¼ft einen Vektor in 3D auf Nullvektor-Eigenschaften
+	 * überprüft einen Vektor in 3D auf Nullvektor-Eigenschaften
 	 * 
 	 */
 	@Test
@@ -128,7 +128,7 @@ public class Vektor3D {
 	}
 
 	/**
-	 * Ã¼berprÃ¼ft zwei Vektoren in 3D auf Gleichheit
+	 * überprüft zwei Vektoren in 3D auf Gleichheit
 	 * 
 	 * @param v
 	 * @return
@@ -139,7 +139,7 @@ public class Vektor3D {
 	}
 
 	/**
-	 * Ã¼berprÃ¼ft zwei Vektoren in 3D auf Ungleichheit
+	 * überprüft zwei Vektoren in 3D auf Ungleichheit
 	 * 
 	 * @param v
 	 * @return
@@ -150,7 +150,7 @@ public class Vektor3D {
 	}
 
 	/**
-	 * Berechnet die LÃ¤nge des Vektors in 2D
+	 * Berechnet die Länge des Vektors in 2D
 	 * 
 	 * @return
 	 */

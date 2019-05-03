@@ -36,7 +36,7 @@ public class Vektor2D {
 	}
 
 	/**
-	 * Belegt den Vektor in 2D mit den Ã¼bergebenen Werten
+	 * Belegt den Vektor in 2D mit den übergebenen Werten
 	 * 
 	 * @param x
 	 * @param y
@@ -48,7 +48,7 @@ public class Vektor2D {
 	}
 
 	/**
-	 * Ã¼berprÃ¼ft den Vektor in 2D auf Nullvektor-Eigenschaften
+	 * überprüft den Vektor in 2D auf Nullvektor-Eigenschaften
 	 * 
 	 */
 	@Test
@@ -146,7 +146,7 @@ public class Vektor2D {
 	}
 
 	/**
-	 * Ã¼berprÃ¼ft zwei Vektoren in 2D auf Gleichheit
+	 * überprüft zwei Vektoren in 2D auf Gleichheit
 	 * 
 	 * @param v
 	 * @return
@@ -157,7 +157,7 @@ public class Vektor2D {
 	}
 
 	/**
-	 * Ã¼berprÃ¼ft zwei Vektoren in 2D auf Ungleichheit
+	 * überprüft zwei Vektoren in 2D auf Ungleichheit
 	 * 
 	 * @param v
 	 * @return
@@ -168,7 +168,7 @@ public class Vektor2D {
 	}
 
 	/**
-	 * Berechnet die LÃ¤nge des Vektors in 2D
+	 * Berechnet die Länge des Vektors in 2D
 	 * 
 	 * @return
 	 */
