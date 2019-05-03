@@ -87,6 +87,7 @@ public class Vektor2D {
 	public void sub(Vektor2D v) throws Exception {
 		System.out.println("Double.MIN_VALUE + Math.abs(v.x)=" + (Double.MIN_VALUE + Math.abs(v.x)));
 		System.out.println("(Double.MIN_VALUE + Math.abs(v.y) > this.y) =" + (Double.MIN_VALUE + Math.abs(v.y) > this.y));
+		
 		if ((Double.MIN_VALUE + Math.abs(v.x) > this.x)
 				|| (Double.MIN_VALUE + Math.abs(v.y) > this.y)) {
 			throw new Exception("Double Wraparound");

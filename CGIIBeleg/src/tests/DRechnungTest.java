@@ -1,68 +1,46 @@
 package tests;
-import static org.junit.jupiter.api.Assertions.*;
 
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+/*
+import org.junit.Test;
+import static org.junit.Assert.*;
+*/
+import beleg.DRechnung;
 
 class DRechnungTest {
-
 	@Test
-	void testObject() {
-		fail("Not yet implemented");
+	public void addDRTest() {
+		double a = 5;
+		double b = 8;
+		try {
+			assert(DRechnung.add(a, b) == 13);
+		} catch (Exception e) {
+			assert(false);
+		}
 	}
-
-	@Test
-	void testGetClass() {
-		fail("Not yet implemented");
+	
+	@Test //(expected = Exception.class)
+	public void addOverflowDRTest() {
+		double a = Double.MAX_VALUE;
+		double b = 8;
+		try {
+			DRechnung.add(a, b);
+			assert(false);
+		} catch (Exception e) {
+			assert(true);
+		}
 	}
-
-	@Test
-	void testHashCode() {
-		fail("Not yet implemented");
+	
+	@Test //(expected = Exception.class)
+	public void addUnderflowDRTest() {
+		double a = Double.MIN_VALUE;
+		double b = -5;
+		try {
+			DRechnung.add(a, b);
+			assert(false);
+		} catch (Exception e) {
+			assert(true);
+		}
 	}
-
-	@Test
-	void testEquals() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testClone() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testToString() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testNotify() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testNotifyAll() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testWaitLong() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testWaitLongInt() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testWait() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testFinalize() {
-		fail("Not yet implemented");
-	}
-
 }

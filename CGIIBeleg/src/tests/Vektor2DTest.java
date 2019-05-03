@@ -5,10 +5,10 @@ package tests;
 //import static org.junit.jupiter.api.Assertions.*;
 //import org.junit.jupiter.api.Test;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 import beleg.Vektor2D;
 
-import static org.junit.Assert.*;
 
 //import org.junit.Rule;
 //import org.junit.rules.ExpectedException;
@@ -52,6 +52,15 @@ public class Vektor2DTest {
 	public void addOverflow2DTest() throws Exception {
 		Vektor2D v = new Vektor2D(Double.MAX_VALUE, Double.MAX_VALUE);
 		v.add(v); // Exception
+	}
+	
+	@Test (expected = Exception.class)
+	public void addAsSub2DTest() throws Exception {
+		Vektor2D v1 = new Vektor2D(Double.MIN_VALUE, 4);
+		Vektor2D v2 = new Vektor2D(Double.MIN_VALUE, 1);
+		v1.add(v2);
+		//assert(v1.x == 2);
+		assert(v1.y == 5);
 	}
 	
 	@Test
