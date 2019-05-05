@@ -1,8 +1,9 @@
 package beleg;
 
 public class LineareAlgebra {
-	private LineareAlgebra() {	}
-	
+	private LineareAlgebra() {
+	}
+
 	public static Vektor2D add(Vektor2D v1, Vektor2D v2) throws Exception {
 		Vektor2D v = new Vektor2D(v1);
 		v.add(v2);
@@ -67,111 +68,141 @@ public class LineareAlgebra {
 		return v1.isNotEqual(v2);
 	}
 
-	public static double length(Vektor2D v) {
+	public static double length(Vektor2D v) throws Exception {
 		return v.length();
 	}
 
-	public static double length(Vektor3D v) {
+	public static double length(Vektor3D v) throws Exception {
 		return v.length();
 	}
 
-	public static Vektor2D normalize(Vektor2D v) {
+	public static Vektor2D normalize(Vektor2D v) throws Exception {
 		Vektor2D tmp = new Vektor2D(v);
 		tmp.normalize();
 		return tmp;
 	}
 
-	public static Vektor3D normalize(Vektor3D v) {
+	public static Vektor3D normalize(Vektor3D v) throws Exception {
 		Vektor3D tmp = new Vektor3D(v);
 		tmp.normalize();
 		return tmp;
 	}
 
-	public static double euklDistance(Vektor2D v1, Vektor2D v2) {
-		return Math.sqrt((v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y));
+	public static double euklDistance(Vektor2D v1, Vektor2D v2) throws Exception {
+		double a = DRechnung.sub(v1.x, v2.x);
+		double b = DRechnung.sub(v1.y, v2.y);
+		double a2 = DRechnung.mult(a, a);
+		double b2 = DRechnung.mult(b, b);
+		return Math.sqrt(DRechnung.add(a2, b2));
 	}
 
-	public static double euklDistance(Vektor3D v1, Vektor3D v2) {
-		return Math.sqrt((v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y) + (v1.z - v2.z) * (v1.z - v2.z));
+	public static double euklDistance(Vektor3D v1, Vektor3D v2) throws Exception {
+		double a = DRechnung.sub(v1.x, v2.x);
+		double b = DRechnung.sub(v1.y, v2.y);
+		double c = DRechnung.sub(v1.z, v2.z);
+		double a2 = DRechnung.mult(a, a);
+		double b2 = DRechnung.mult(b, b);
+		double c2 = DRechnung.mult(c, c);
+		double ab = DRechnung.add(a2, b2);
+		return Math.sqrt(DRechnung.add(ab, c2));
 	}
 
-	public static double manhattenDistance(Vektor2D v) {
-		return Math.abs(v.x) + Math.abs(v.y);
+	public static double manhattenDistance(Vektor2D v) throws Exception {
+		return DRechnung.add(Math.abs(v.x), Math.abs(v.y));
 	}
 
-	public static double manhattenDistance(Vektor3D v) {
-		return Math.abs(v.x) + Math.abs(v.y) + Math.abs(v.z);
+	public static double manhattenDistance(Vektor3D v) throws Exception {
+		double a = DRechnung.add(Math.abs(v.x), Math.abs(v.y));
+		return DRechnung.add(a, Math.abs(v.z));
 	}
 
-	public static Vektor3D crossProduct(Vektor3D v1, Vektor3D v2) {
-		double x = v1.y * v2.z - v1.z * v2.y;
-		double y = v1.z * v2.x - v1.x * v2.z;
-		double z = v1.x * v2.y - v1.y * v2.x;
+	public static Vektor3D crossProduct(Vektor3D v1, Vektor3D v2) throws Exception {
+		double x = DRechnung.sub(DRechnung.mult(v1.y, v2.z), DRechnung.mult(v1.z, v2.y));
+		double y = DRechnung.sub(DRechnung.mult(v1.z, v2.x), DRechnung.mult(v1.x, v2.z));
+		double z = DRechnung.sub(DRechnung.mult(v1.x, v2.y), DRechnung.mult(v1.y, v2.x));
 		return new Vektor3D(x, y, z);
 	}
 
-	public static double dotProduct(Vektor2D v1, Vektor2D v2) {
-		return v1.x * v2.x + v1.y * v2.y;
+	public static double dotProduct(Vektor2D v1, Vektor2D v2) throws Exception {
+		double a = DRechnung.mult(v1.x, v2.x);
+		double b = DRechnung.mult(v1.y, v2.y);
+		return DRechnung.add(a, b);
 	}
 
-	public static double dotProduct(Vektor3D v1, Vektor3D v2) {
-		return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+	public static double dotProduct(Vektor3D v1, Vektor3D v2) throws Exception {
+		double x = DRechnung.mult(v1.x, v2.x);
+		double y = DRechnung.mult(v1.y, v2.y);
+		double z = DRechnung.mult(v1.z, v2.z);
+		return DRechnung.add(DRechnung.add(x, y), z);
 	}
 
-	public static double cosEquation(Vektor2D v1, Vektor2D v2) {
-		return dotProduct(v1, v2) / (length(v1) * length(v2));
+	public static double cosEquation(Vektor2D v1, Vektor2D v2) throws Exception {
+		double a = dotProduct(v1, v2);
+		double b = DRechnung.mult(length(v1), length(v2));
+		return DRechnung.div(a, b);
 	}
 
-	public static double cosEquation(Vektor3D v1, Vektor3D v2) {
-		return dotProduct(v1, v2) / (length(v1) * length(v2));
+	public static double cosEquation(Vektor3D v1, Vektor3D v2) throws Exception {
+		double a = dotProduct(v1, v2);
+		double b = DRechnung.mult(length(v1), length(v2));
+		return DRechnung.div(a, b);
 	}
 
-	public static double sinEquation(Vektor3D v1, Vektor3D v2) {
-		return length(crossProduct(v1, v2)) / (length(v1) * length(v2));
+	public static double sinEquation(Vektor3D v1, Vektor3D v2) throws Exception {
+		double a = length(crossProduct(v1, v2));
+		double b = DRechnung.mult(length(v1), length(v2));
+		return DRechnung.div(a, b);
 	}
 
-	public static double angleRad(Vektor2D v1, Vektor2D v2) {
+	public static double angleRad(Vektor2D v1, Vektor2D v2) throws Exception {
 		return Math.acos(cosEquation(v1, v2));
 	}
 
-	public static double angleRad(Vektor3D v1, Vektor3D v2) {
+	public static double angleRad(Vektor3D v1, Vektor3D v2) throws Exception {
 		return Math.acos(cosEquation(v1, v2));
 	}
 
-	public static double angleDegree(Vektor2D v1, Vektor2D v2) {
+	public static double angleDegree(Vektor2D v1, Vektor2D v2) throws Exception {
 		return radToDegree(angleRad(v1, v2));
 	}
 
-	public static double angleDegree(Vektor3D v1, Vektor3D v2) {
+	public static double angleDegree(Vektor3D v1, Vektor3D v2) throws Exception {
 		return radToDegree(angleRad(v1, v2));
 	}
 
-	public static double radToDegree(double ang) {
-		return (180 * ang) / Math.PI;
+	public static double radToDegree(double ang) throws Exception {
+		double a = DRechnung.mult(180, ang);
+		return DRechnung.div(a, Math.PI);
 	}
 
-	public static double degreeToRad(double ang) {
-		return (ang * Math.PI) / 180;
+	public static double degreeToRad(double ang) throws Exception {
+		double a = DRechnung.mult(ang, Math.PI);
+		return DRechnung.div(a, 180);
 	}
 
-	public static double determinante(Vektor2D v1, Vektor2D v2) {
-		return v1.x * v2.y - v1.y * v2.x;
+	public static double determinante(Vektor2D v1, Vektor2D v2) throws Exception {
+		double a = DRechnung.mult(v1.x, v2.y);
+		double b = DRechnung.mult(v1.y, v2.x);
+		return DRechnung.sub(a, b);
 	}
 
-	public static double determinante(Vektor3D v1, Vektor3D v2, Vektor3D v3) {
-		double a = v1.x * v2.y * v3.z;
-		double b = v2.x * v3.y * v1.z;
-		double c = v3.x * v1.y * v2.z;
-		double d = v1.z * v2.y * v3.x;
-		double e = v2.z * v3.y * v1.x;
-		double f = v3.z * v1.y * v2.x;
-		return a + b + c - d - e - f;
+	public static double determinante(Vektor3D v1, Vektor3D v2, Vektor3D v3) throws Exception {
+		double a = DRechnung.mult(DRechnung.mult(v1.x, v2.y), v3.z);
+		double b = DRechnung.mult(DRechnung.mult(v2.x, v3.y), v1.z);
+		double c = DRechnung.mult(DRechnung.mult(v3.x, v1.y), v2.z);
+		double d = DRechnung.mult(DRechnung.mult(v1.z, v2.y), v3.x);
+		double e = DRechnung.mult(DRechnung.mult(v2.z, v3.y), v1.x);
+		double f = DRechnung.mult(DRechnung.mult(v3.z, v1.y), v2.x);
+		double sum1 = DRechnung.add(DRechnung.add(a, b), c);
+		double sum2 = DRechnung.add(DRechnung.add(-d, -e), -f);
+		return DRechnung.add(sum1, sum2);
+		// return a + b + c - d - e - f;
 	}
 
 	public static Vektor2D abs(Vektor2D vsrc) throws Exception {
 		Vektor2D v = new Vektor2D(vsrc);
-		if ((v.x == Double.MIN_VALUE) || (v.y == Double.MIN_VALUE))
-			throw new Exception("nicht darstellbar");
+		//if ((v.x == DRechnung.MIN) || (v.y == DRechnung.MIN))
+		//	throw new Exception("nicht darstellbar");
 		if (v.x < 0)
 			v.x = -v.x;
 		if (v.y < 0)
@@ -181,8 +212,8 @@ public class LineareAlgebra {
 
 	public static Vektor3D abs(Vektor3D vsrc) throws Exception {
 		Vektor3D v = new Vektor3D(vsrc);
-		if ((v.x == Double.MIN_VALUE) || (v.y == Double.MIN_VALUE) || (v.z == Double.MIN_VALUE))
-			throw new Exception("nicht darstellbar");
+		//if ((v.x == DRechnung.MIN) || (v.y == DRechnung.MIN) || (v.z == DRechnung.MIN))
+		//	throw new Exception("nicht darstellbar");
 		if (v.x < 0)
 			v.x = -v.x;
 		if (v.y < 0)
@@ -199,5 +230,5 @@ public class LineareAlgebra {
 	public static void show(Vektor3D v) {
 		System.out.println("Vektor3D [" + v.x + ", " + v.y + ", " + v.z + "]");
 	}
-	
+
 }
