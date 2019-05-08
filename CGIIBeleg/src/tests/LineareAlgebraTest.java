@@ -46,7 +46,7 @@ public class LineareAlgebraTest {
 		Vektor3D v3 = LineareAlgebra.sub(v1, v2);
 		assert (v3.x == 1);
 		assert (v3.y == -3);
-		assert (v3.z == 1);
+		assert (v3.z == -1);
 	}
 
 	@Test
@@ -185,7 +185,7 @@ public class LineareAlgebraTest {
 	@Test
 	public void manhDistance2DLACalcTest() throws Exception {
 		Vektor2D v1 = new Vektor2D(2, 4);
-		assert (3.0 == LineareAlgebra.manhattenDistance(v1));
+		assert (6.0 == LineareAlgebra.manhattenDistance(v1));
 	}
 
 	@Test
@@ -239,15 +239,16 @@ public class LineareAlgebraTest {
 
 	@Test
 	public void cosEqu3DLACalcTest() throws Exception {
-		Vektor3D v1 = new Vektor3D(4, 0, 2);
-		Vektor3D v2 = new Vektor3D(0, 4, 2);
+		Vektor3D v1 = new Vektor3D(4, 0, 0);
+		Vektor3D v2 = new Vektor3D(0, 4, 0);
+		System.out.println("cosEq: " + LineareAlgebra.cosEquation(v1, v2));
 		assert (0.0 == LineareAlgebra.cosEquation(v1, v2));
 	}
 
 	@Test
 	public void sinEqu3DLACalcTest() throws Exception {
-		Vektor3D v1 = new Vektor3D(4, 0, 2);
-		Vektor3D v2 = new Vektor3D(0, 4, 2);
+		Vektor3D v1 = new Vektor3D(4, 0, 0);
+		Vektor3D v2 = new Vektor3D(0, 4, 0);
 		assert (1.0 == LineareAlgebra.sinEquation(v1, v2));
 	}
 
@@ -255,14 +256,14 @@ public class LineareAlgebraTest {
 	public void angRad2DLACalcTest() throws Exception {
 		Vektor2D v1 = new Vektor2D(4, 0);
 		Vektor2D v2 = new Vektor2D(0, 4);
-		assert (0.25 == LineareAlgebra.angleRad(v1, v2));
+		assert (1.5708 == Math.round(LineareAlgebra.angleRad(v1, v2)*10000.0)/10000.0);
 	}
 
 	@Test
 	public void angRad3DLACalcTest() throws Exception {
-		Vektor3D v1 = new Vektor3D(4, 0, 2);
-		Vektor3D v2 = new Vektor3D(0, 4, 2);
-		assert (0.25 == LineareAlgebra.angleRad(v1, v2));
+		Vektor3D v1 = new Vektor3D(4, 0, 0);
+		Vektor3D v2 = new Vektor3D(0, 4, 0);
+		assert (1.5708 == Math.round(LineareAlgebra.angleRad(v1, v2)*10000.0)/10000.0);
 	}
 
 	@Test
@@ -274,19 +275,19 @@ public class LineareAlgebraTest {
 
 	@Test
 	public void angDeg3DLACalcTest() throws Exception {
-		Vektor3D v1 = new Vektor3D(4, 0, 2);
-		Vektor3D v2 = new Vektor3D(0, 4, 2);
+		Vektor3D v1 = new Vektor3D(4, 0, 0);
+		Vektor3D v2 = new Vektor3D(0, 4, 0);
 		assert (90 == LineareAlgebra.angleDegree(v1, v2));
 	}
 
 	@Test
 	public void radToDegreeCalcTest() throws Exception {
-		assert (90 == LineareAlgebra.radToDegree(0.25));
+		assert (90 == Math.round(LineareAlgebra.radToDegree(1.570796)*10000.0)/10000.0);
 	}
 
 	@Test
 	public void degreeToRadCalcTest() throws Exception {
-		assert (0.25 == LineareAlgebra.degreeToRad(90));
+		assert (1.5708 == Math.round(LineareAlgebra.degreeToRad(90)*10000.0)/10000.0);
 	}
 
 	@Test
@@ -325,18 +326,42 @@ public class LineareAlgebraTest {
 	public void show2DTest() {
 		ByteArrayOutputStream b = new ByteArrayOutputStream();
 		PrintStream p = new PrintStream(b);
+		PrintStream sOut = System.out;
 		System.setOut(p);
 		LineareAlgebra.show(new Vektor2D(1, 2));
-		String s = "Vektor2D [1, 2]";
-		assert (s == p.toString());
+		System.setOut(sOut);
+		String ist = b.toString();
+		
+		
+		b = new ByteArrayOutputStream();
+		p = new PrintStream(b);
+		sOut = System.out;
+		System.setOut(p);
+		System.out.println("Vektor2D [1.0, 2.0]");
+		String soll = b.toString();
+		System.setOut(sOut);
+		
+		Assertions.assertEquals(soll, ist);
 	}
 
 	@Test
 	public void show3DTest() {
-		PrintStream p = new PrintStream(new ByteArrayOutputStream());
+		ByteArrayOutputStream b = new ByteArrayOutputStream();
+		PrintStream p = new PrintStream(b);
+		PrintStream sOut = System.out;
 		System.setOut(p);
 		LineareAlgebra.show(new Vektor3D(1, 2, 3));
-		String s = "Vektor2D [1, 2, 3]";
-		assert (s == p.toString());
+		System.setOut(sOut);
+		String ist = b.toString();
+		
+		b = new ByteArrayOutputStream();
+		p = new PrintStream(b);
+		sOut = System.out;
+		System.setOut(p);
+		System.out.println("Vektor3D [1.0, 2.0, 3.0]");
+		String soll = b.toString();
+		System.setOut(sOut);
+		
+		Assertions.assertEquals(soll, ist);
 	}
 }

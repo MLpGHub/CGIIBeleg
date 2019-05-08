@@ -889,19 +889,99 @@ Ausgewählte Methode: crossProduct() für Vektor3D
 \end_layout
 
 \begin_layout Standard
-Bildet den orthogonalen Vektor zu den beiden gegebenen und gibt diesen zurück.
+Bildet den orthogonalen Vektor 
+\begin_inset Formula $\overrightarrow{n}$
+\end_inset
+
+ zu den beiden gegebenen 
+\begin_inset Formula $\overrightarrow{p}$
+\end_inset
+
+und 
+\begin_inset Formula $\overrightarrow{q}$
+\end_inset
+
+ und gibt dessen Werte zurück.
  Berechnungsvorschrift:
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-asdasdsa
+\vec{n}=\overrightarrow{p}x\overrightarrow{q}=\left(\begin{array}{c}
+p_{x}\\
+p_{y}\\
+p_{z}
+\end{array}\right)\times\left(\begin{array}{c}
+q_{x}\\
+q_{y}\\
+q_{z}
+\end{array}\right)=\left(\begin{array}{c}
+p_{y}q_{z}-p_{z}q_{y}\\
+p_{z}q_{x}-p_{x}q_{z}\\
+p_{x}q_{y}-p_{y}q_{x}
+\end{array}\right)
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Am besten lässt sich dieses Mathematische Konstrukt mit der 'Rechten Hand
+ Regel illustrieren
+\begin_inset CommandInset label
+LatexCommand label
+name "Abb1"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "Abb1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename img/RechteHand.png
+	lyxscale 10
+	scale 10
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard

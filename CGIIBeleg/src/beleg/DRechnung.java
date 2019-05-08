@@ -27,12 +27,14 @@ public class DRechnung {
 
 	@Test
 	public static double mult(double a, double b) throws Exception {
-		if (a > MAX / b) {
+		if (Math.abs(a) > Math.abs(MAX / b)) {
 			throw new Exception("Double Overflow");
 		}
-		if ((a < MIN / b)) {
+		/*
+		if (a < MIN / b) {
 			throw new Exception("Double Underflow");
 		}
+		*/
 		return a * b;
 	}
 
