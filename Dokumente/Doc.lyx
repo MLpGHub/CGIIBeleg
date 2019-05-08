@@ -6,8 +6,88 @@
 \origin unavailable
 \textclass article
 \begin_preamble
-%fuer codelistings:
-\definecolor{lightergray}{rgb}{0.90, 0.90, 0.90} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Farben fuer Programmlisting
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{listings,xcolor}
+
+\definecolor{foreground}{HTML}{D8D8D8}
+\definecolor{background}{HTML}{2F2F2F}
+\definecolor{selectionForeground}{HTML}{D0D0D0}
+\definecolor{selectionBackground}{HTML}{000000}
+\definecolor{currentLine}{HTML}{2A2A2A}
+\definecolor{lineNumber}{HTML}{D0D0D0}
+\definecolor{searchResultIndication}{HTML}{000000}
+\definecolor{filteredSearchResultIndication}{HTML}{000000}
+\definecolor{occurrenceIndication}{HTML}{000000}
+\definecolor{writeOccurrenceIndication}{HTML}{000000}
+\definecolor{findScope}{HTML}{111111}
+\definecolor{sourceHoverBackground}{HTML}{000000}
+\definecolor{singleLineComment}{HTML}{6D6D6D}
+\definecolor{multiLineComment}{HTML}{6D6D6D}
+\definecolor{commentTaskTag}{HTML}{6D6D6D}
+\definecolor{javadoc}{HTML}{808080}
+\definecolor{javadocLink}{HTML}{a0a0a0}
+\definecolor{javadocTag}{HTML}{a0a0a0}
+\definecolor{javadocKeyword}{HTML}{a0a0a0}
+\definecolor{class}{HTML}{2672c3}
+\definecolor{interface}{HTML}{BA31FF}
+\definecolor{method}{HTML}{2ba141}
+\definecolor{methodDeclaration}{HTML}{777777}
+\definecolor{bracket}{HTML}{e6e6fa}
+\definecolor{number}{HTML}{4d87bb}
+\definecolor{string}{HTML}{17c6a3}
+\definecolor{operator}{HTML}{e6e6fa}
+\definecolor{keyword}{HTML}{9c4530}
+\definecolor{annotation}{HTML}{FFFFFF}
+\definecolor{staticMethod}{HTML}{777777}
+\definecolor{localVariable}{HTML}{79ABFF}
+\definecolor{localVariableDeclaration}{HTML}{BED6FF}
+\definecolor{field}{HTML}{777777}
+\definecolor{staticField}{HTML}{777777}
+\definecolor{staticFinalField}{HTML}{777777}
+\definecolor{deprecatedMember}{HTML}{777777}
+\definecolor{deletionIndication}{HTML}{777777}
+\definecolor{enum}{HTML}{777777}
+\definecolor{inheritedMethod}{HTML}{777777}
+\definecolor{abstractMethod}{HTML}{777777}
+\definecolor{parameterVariable}{HTML}{777777}
+\definecolor{typeArgument}{HTML}{777777}
+\definecolor{typeParameter}{HTML} {777777}
+\definecolor{constant}{HTML}{b77730}
+
+%%777777 --> filler
+
+
+% Vordefiniertes Programmlisting
+\lstset{
+language = Java,
+basicstyle = \small\sffamily,
+backgroundcolor = \color{background},
+stringstyle = \color{string},
+keywordstyle = \color{keyword}\bfseries,
+commentstyle = \color{singleLineComment}\itshape,
+frame = lrbt,
+frameround =tttt,
+numbers = left,
+numberstyle = \color{number},
+showstringspaces = false,
+breaklines = true,
+xleftmargin = 15pt,
+emph = [1]{Java},
+emphstyle = [1]\color{black},
+emph = [2]{if,and,or,else},
+emphstyle = [2]\color{interface},
+emph = [3]{Exception},
+emphstyle = [3]\color{localVariable},
+emph = [4]{expected},
+emphstyle = [4]\color{localVariable},
+emph = [5]{@Test,@param,@author},
+emphstyle = [5]\color{javadocLink},
+emph = [6]{out,MIN_VALUE,MAX_VALUE,MIN,MAX},
+emphstyle = [6]\color{localVariableDeclaration}
+}
 \end_preamble
 \use_default_options true
 \maintain_unincluded_children false
@@ -993,7 +1073,12 @@ status open
 
 \begin_layout Plain Layout
 
-@Test public double length() throws Exception {
+@Test 
+\end_layout
+
+\begin_layout Plain Layout
+
+public double length() throws Exception {
 \end_layout
 
 \begin_layout Plain Layout

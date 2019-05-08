@@ -1,0 +1,76 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Farben fuer Programmlisting
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{listings,xcolor}
+
+\definecolor{foreground}{HTML}{D8D8D8}
+\definecolor{background}{HTML}{2F2F2F}
+\definecolor{selectionForeground}{HTML}{D0D0D0}
+\definecolor{selectionBackground}{HTML}{000000}
+\definecolor{currentLine}{HTML}{2A2A2A}
+\definecolor{lineNumber}{HTML}{D0D0D0}
+\definecolor{searchResultIndication}{HTML}{000000}
+\definecolor{filteredSearchResultIndication}{HTML}{000000}
+\definecolor{occurrenceIndication}{HTML}{000000}
+\definecolor{writeOccurrenceIndication}{HTML}{000000}
+\definecolor{findScope}{HTML}{111111}
+\definecolor{sourceHoverBackground}{HTML}{000000}
+\definecolor{singleLineComment}{HTML}{6D6D6D}
+\definecolor{multiLineComment}{HTML}{6D6D6D}
+\definecolor{commentTaskTag}{HTML}{6D6D6D}
+\definecolor{javadoc}{HTML}{808080}
+\definecolor{javadocLink}{HTML}{a0a0a0}
+\definecolor{javadocTag}{HTML}{a0a0a0}
+\definecolor{javadocKeyword}{HTML}{a0a0a0}
+\definecolor{class}{HTML}{2672c3}
+\definecolor{interface}{HTML}{777777}
+\definecolor{method}{HTML}{2ba141}
+\definecolor{methodDeclaration}{HTML}{777777}
+\definecolor{bracket}{HTML}{e6e6fa}
+\definecolor{number}{HTML}{4d87bb}
+\definecolor{string}{HTML}{17c6a3}
+\definecolor{operator}{HTML}{e6e6fa}
+\definecolor{keyword}{HTML}{9c4530}
+\definecolor{annotation}{HTML}{777777}
+\definecolor{staticMethod}{HTML}{777777}
+\definecolor{localVariable}{HTML}{f2f200}
+\definecolor{localVariableDeclaration}{HTML}{777777}
+\definecolor{field}{HTML}{777777}
+\definecolor{staticField}{HTML}{777777}
+\definecolor{staticFinalField}{HTML}{777777}
+\definecolor{deprecatedMember}{HTML}{777777}
+\definecolor{deletionIndication}{HTML}{777777}
+\definecolor{enum}{HTML}{777777}
+\definecolor{inheritedMethod}{HTML}{777777}
+\definecolor{abstractMethod}{HTML}{777777}
+\definecolor{parameterVariable}{HTML}{777777}
+\definecolor{typeArgument}{HTML}{777777}
+\definecolor{typeParameter}{HTML} {777777}
+\definecolor{constant}{HTML}{b77730}
+
+%%777777 --> filler
+
+
+\definecolor{pl_ifelse}{rgb}{0.74,0.74,.29}
+\definecolor{pl_keyword}{rgb}{0.37, 0.08, 0.25}
+\definecolor{pl_string}{rgb}{0.06, 0.10, 0.98}
+
+
+% Vordefiniertes Programmlisting
+\lstset{
+language = java,
+basicstyle = \small\sffamily,
+backgroundcolor = \color{background},
+stringstyle = \color{string},
+keywordstyle = \color{keyword}\bfseries,
+commentstyle = \color{singleLineComment}\itshape,
+frame = lrbt,
+numbers = left,
+showstringspaces = false,
+breaklines = true,
+xleftmargin = 15pt,
+emph = [1]{php},
+emphstyle = [1]\color{black},
+emph = [2]{if,and,or,else},
+emphstyle = [2]\color{pl_ifelse}}
