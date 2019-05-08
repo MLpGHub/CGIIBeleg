@@ -150,6 +150,14 @@ public class LineareAlgebraTest {
 		Vektor3D v = new Vektor3D(3, 4, 0);
 		assert (5.0 == LineareAlgebra.length(v));
 	}
+	
+	@Test 
+	public void lengthOverflow3DTest() {
+		Vektor3D v = new Vektor3D(DRechnung.MAX, 3, 4);
+		Assertions.assertThrows (Exception.class, () -> {
+			v.length();
+		});
+	}
 
 	@Test
 	public void normalize2DLACalcTest() throws Exception {

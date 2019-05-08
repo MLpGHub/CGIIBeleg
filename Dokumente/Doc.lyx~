@@ -305,22 +305,339 @@ Eclipse 2019-03
 \family default
  unter Zuhilfenahme von 
 \family typewriter
-JUnit 4
+JUnit 5
 \family default
  entwickelt und getestet.
 \end_layout
 
 \begin_layout Subsection
-Klasse abcd
+Klasse DRechnung
 \end_layout
 
 \begin_layout Standard
-voll die krasse Wrapper-Class für Berechnungen mit double in Java.
- Die ist sehr effizient! ;-)
+Um die Überprüfungen bei Berechnungen mit dem primitiven Datentyp 
+\family typewriter
+double
+\family default
+ zu bündeln, wurden die Berechnungen von Summen, Differenzen, Produkten
+ und Quotienten in die Klasse 
+\family typewriter
+DRechnung
+\family default
+ ausgelagert.
+ Dort sind sie als statische Methoden verfügbar.
+ Weiterhin sind die größte und die kleinste mit dem Datentyp 
+\family typewriter
+double
+\family default
+ darstellbare Zahl als Konstanten 
+\family typewriter
+MIN
+\family default
+ und 
+\family typewriter
+MAX
+\family default
+ vorhanden.
+\end_layout
+
+\begin_layout Standard
+Beispielhaft für die testgetriebene Entwicklung soll die Methode 
+\family typewriter
+add()
+\family default
+ vorgestellt werden.
+ Der folgende Test überprüft eine einfache Berechnung einer Summe.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+@Test
+\end_layout
+
+\begin_layout Plain Layout
+
+public void addDRTest() throws Exception {
+\end_layout
+
+\begin_layout Plain Layout
+
+	double a = 5;
+\end_layout
+
+\begin_layout Plain Layout
+
+	double b = 8;
+\end_layout
+
+\begin_layout Plain Layout
+
+	assert (DRechnung.add(a, b) == 13); 
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Die daraufhin entwickelte Implentierung sieht wiefolgt aus:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+public static double add(double a, double b) {
+\end_layout
+
+\begin_layout Plain Layout
+
+ 	return a + b; 
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Als nächstes wird eine Überprüfung auf double Overflow hinzugefügt.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+@Test 
+\end_layout
+
+\begin_layout Plain Layout
+
+public void addOverflowDRTest() {
+\end_layout
+
+\begin_layout Plain Layout
+
+	double a = DRechnung.MAX;
+\end_layout
+
+\begin_layout Plain Layout
+
+	double b = 8;
+\end_layout
+
+\begin_layout Plain Layout
+
+	Assertions.assertThrows(Exception.class, () -> {
+\end_layout
+
+\begin_layout Plain Layout
+
+		DRechnung.add(a, b); 
+\end_layout
+
+\begin_layout Plain Layout
+
+	}); 
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Es folgt die Implementierung:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+public static double add(double a, double b) throws Exception {
+\end_layout
+
+\begin_layout Plain Layout
+
+	if ((a > 0) && (b > MAX - a)) {
+\end_layout
+
+\begin_layout Plain Layout
+
+		throw new Exception("Double Overflow");
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+	return a + b; 
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Zuletzt wird auf double Unterflows getestet.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+@Test 
+\end_layout
+
+\begin_layout Plain Layout
+
+public void addUnderflowDRTest() {
+\end_layout
+
+\begin_layout Plain Layout
+
+	double a = DRechnung.MIN;
+\end_layout
+
+\begin_layout Plain Layout
+
+	double b = -5;
+\end_layout
+
+\begin_layout Plain Layout
+
+	Assertions.assertThrows(Exception.class, () -> {
+\end_layout
+
+\begin_layout Plain Layout
+
+		DRechnung.add(a, b);
+\end_layout
+
+\begin_layout Plain Layout
+
+	});
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Die finale Implementierung sieht wiefolgt aus:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+public static double add(double a, double b) throws Exception {
+\end_layout
+
+\begin_layout Plain Layout
+
+	if ((a > 0) && (b > MAX - a)) {
+\end_layout
+
+\begin_layout Plain Layout
+
+		throw new Exception("Double Overflow");
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+	if ((a < 0) && (b < MIN - a)) {
+\end_layout
+
+\begin_layout Plain Layout
+
+		throw new Exception("Double Underflow");
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+	return a + b;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
-Klasse Vektor2D
+Klasse Vektor3D
 \end_layout
 
 \begin_layout Standard
@@ -330,18 +647,18 @@ Um den Zugriff auf die Variablen zu vereinfachen, wurden hier auf die get-
 
 \begin_layout Standard
 \begin_inset listings
-lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color[rgb]{0.702,1,0.5059}},frame=single,xleftmargin=15pt"
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
 inline false
 status open
 
 \begin_layout Plain Layout
 
-public class Vektor2D {
+public class Vektor3D {
 \end_layout
 
 \begin_layout Plain Layout
 
-	public double x, y;
+	public double x, y, z;
 \end_layout
 
 \begin_layout Plain Layout
@@ -365,18 +682,18 @@ Verschachtelte Konstrukturen wurden angelegt, um Redundanz zu vermeiden:
 
 \begin_layout Standard
 \begin_inset listings
-lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color{lightergray}},frame=single,xleftmargin=15pt"
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
 inline false
 status open
 
 \begin_layout Plain Layout
 
-public Vektor2() {
+public Vektor3D() {
 \end_layout
 
 \begin_layout Plain Layout
 
-	this(0, 0);
+	this(0, 0, 0);
 \end_layout
 
 \begin_layout Plain Layout
@@ -390,7 +707,7 @@ public Vektor2() {
 
 \begin_layout Plain Layout
 
-public Vektor3D(double x, double y) {
+public Vektor3D(double x, double y, double z) {
 \end_layout
 
 \begin_layout Plain Layout
@@ -405,6 +722,11 @@ public Vektor3D(double x, double y) {
 
 \begin_layout Plain Layout
 
+	this.z = z;
+\end_layout
+
+\begin_layout Plain Layout
+
 }
 \end_layout
 
@@ -414,12 +736,12 @@ public Vektor3D(double x, double y) {
 
 \begin_layout Plain Layout
 
-public Vektor2D(Vektor2D src) {
+public Vektor3D(Vektor3D src) {
 \end_layout
 
 \begin_layout Plain Layout
 
-	this(src.x, src.y);
+	this(src.x, src.y, src.z);
 \end_layout
 
 \begin_layout Plain Layout
@@ -433,18 +755,310 @@ public Vektor2D(Vektor2D src) {
 \end_layout
 
 \begin_layout Subsubsection
-Ausgewählte Methode: normalize()
+Ausgewählte Methode: 
+\family typewriter
+length()
+\end_layout
+
+\begin_layout Standard
+Die Länge oder Magnitude eines Vektors 
+\begin_inset Formula $\vec{p}$
+\end_inset
+
+, symbolisiert durch 
+\begin_inset Formula $\left\Vert \circ\right\Vert $
+\end_inset
+
+, ergibt sich aus
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+length(\vec{p})=\left\Vert \vec{p}\right\Vert =\sqrt{p_{1}^{2}+p_{2}^{2}+\ldots+p_{n}^{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+und liefert einen Skalar.
+ Dem Längenmaß eines Vektors liegt der euklidische Abstand zu Grunde.
+ Eine grafische Darstellung der Länge eines Vektors findet sich in der Abbildung
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Vektorlänge"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename img/vektorlaenge.png
+	lyxscale 10
+	scale 75
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Vektorlänge"
+
+\end_inset
+
+Die Länge eines dreidimensionalen Vektors.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Ein erster Test für die Berechnung der Länge eines Vektors ist nachfolgend
+ zu finden:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},showstringspaces=false,tabsize=3,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+@Test
+\end_layout
+
+\begin_layout Plain Layout
+
+public void lengthCalculation3DTest() {
+\end_layout
+
+\begin_layout Plain Layout
+
+	Vektor3D v = new Vektor3D(3, 4, 0);
+\end_layout
+
+\begin_layout Plain Layout
+
+	double l = v.length();
+\end_layout
+
+\begin_layout Plain Layout
+
+	assert (l == 5);
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Die dazugehörige Implementierung sieht wiefolgt aus:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},showstringspaces=false,tabsize=3,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+public double length() {
+\end_layout
+
+\begin_layout Plain Layout
+
+	return Math.sqrt(x*x + y*y + z*z);  
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Bei der Berechnung von Quadratzahlen und deren Summierung können schnell
+ zu double Overflows auftreten.
+ Der folgende Test führt eine Überprüfung dessen durch:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},showstringspaces=false,tabsize=3,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+@Test 
+\end_layout
+
+\begin_layout Plain Layout
+
+public void lengthOverflow3DTest() {
+\end_layout
+
+\begin_layout Plain Layout
+
+	Vektor3D v = new Vektor3D(DRechnung.MAX, 3, 4);
+\end_layout
+
+\begin_layout Plain Layout
+
+	Assertions.assertThrows (Exception.class, () -> {
+\end_layout
+
+\begin_layout Plain Layout
+
+		v.length();
+\end_layout
+
+\begin_layout Plain Layout
+
+	});
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Die Implementierung der Overflow-Überprüfung ist jedoch nicht besonders
+ schwer.
+ Denn für die Berechnungen der Methode 
+\family typewriter
+length()
+\family default
+ können die Methoden aus der Klasse 
+\family typewriter
+DRechnung
+\family default
+ genutzt werden, die schon auf double Overflows überprüfen.
+ Der Quellcode dafür sieht wiefolgt aus:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},showstringspaces=false,tabsize=3,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+@Test public double length() throws Exception {
+\end_layout
+
+\begin_layout Plain Layout
+
+	double x2 = DRechnung.mult(this.x, this.x);
+\end_layout
+
+\begin_layout Plain Layout
+
+	double y2 = DRechnung.mult(this.y, this.y);
+\end_layout
+
+\begin_layout Plain Layout
+
+	double z2 = DRechnung.mult(this.z, this.z);
+\end_layout
+
+\begin_layout Plain Layout
+
+	double x2y2 = DRechnung.add(x2, y2);
+\end_layout
+
+\begin_layout Plain Layout
+
+	return Math.sqrt(DRechnung.add(x2y2, z2));
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Klasse Vektor2D
+\end_layout
+
+\begin_layout Standard
+Auch in der Klasse 
+\family typewriter
+Vektor2D
+\family default
+ wurden Vereinfachungen für ein einfacheres Arbeiten vorgenommen.
+ Sie sind äquivalent zu den Vereinfachungen bei der Klasse 
+\family typewriter
+Vektor3D
+\family default
+.
+\end_layout
+
+\begin_layout Subsubsection
+Ausgewählte Methode: 
+\family typewriter
+normalize()
 \end_layout
 
 \begin_layout Standard
 Die Methode 
-\begin_inset Quotes gld
-\end_inset
-
+\family typewriter
 normalize()
-\begin_inset Quotes grd
-\end_inset
-
+\family default
  ist eine Auswahl unter vielen, die zeigt, dass wir unseren Code Style stets
  klein und Ressourceneffizeint halten.
  Minimalistisch und Laufzeiteffizient indem möglichst wenige Aufrufe und
@@ -455,10 +1069,10 @@ normalize()
 Die Normierung eines Vektors lässt sich wiefolgt beschreiben:
 \begin_inset Formula 
 \[
-norm(p)=\left(\begin{array}{c}
-p_{x}/len(p)\\
-p_{y}/len(p)
-\end{array}\right);len(p)=\sqrt{p_{x}^{2}+p_{y}^{2}}
+norm(\vec{p})=\left(\begin{array}{c}
+p_{x}/length(\vec{p})\\
+p_{y}/length(\vec{p})
+\end{array}\right)
 \]
 
 \end_inset
@@ -467,14 +1081,20 @@ p_{y}/len(p)
 \end_layout
 
 \begin_layout Standard
-Erster Test:
+Ein erster Test zur Normierung eines zweidimensionalen Vektors sieht wiefolgt
+ aus:
 \end_layout
 
 \begin_layout Standard
 \begin_inset listings
-lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color{lightergray}},frame=single,xleftmargin=15pt"
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
 inline false
 status open
+
+\begin_layout Plain Layout
+
+@Test
+\end_layout
 
 \begin_layout Plain Layout
 
@@ -512,12 +1132,12 @@ public void normalizeCalculation2DTest() {
 \end_layout
 
 \begin_layout Standard
-Daraufhin entwickelter Code:
+So sieht die erste Implementierung des Codes aus:
 \end_layout
 
 \begin_layout Standard
 \begin_inset listings
-lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color{lightergray}},frame=single,xleftmargin=15pt"
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
 inline false
 status open
 
@@ -528,12 +1148,12 @@ public void normalize() {
 
 \begin_layout Plain Layout
 
-	this.x = this.x / length();
+	this.x = DRechnung.div(this.x, length());
 \end_layout
 
 \begin_layout Plain Layout
 
-	this.y = this.y / length();
+	this.y = DRechnung.div(this.y, length());
 \end_layout
 
 \begin_layout Plain Layout
@@ -547,14 +1167,25 @@ public void normalize() {
 \end_layout
 
 \begin_layout Standard
-Dann getestet mit folgendem Test:
+Ein wichtiger Test bei der Normierung von Vektoren ist, dass bei einer Länge
+ von 
+\family typewriter
+length = 0
+\family default
+ keine Division durch Null erfolgt.
+ Der Test dafür sieht wiefolgt aus:
 \end_layout
 
 \begin_layout Standard
 \begin_inset listings
-lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color{lightergray}},frame=single,xleftmargin=15pt"
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
 inline false
 status open
+
+\begin_layout Plain Layout
+
+@Test
+\end_layout
 
 \begin_layout Plain Layout
 
@@ -592,19 +1223,19 @@ public void normalizeLengthNull2DTest() {
 \end_layout
 
 \begin_layout Standard
-Auftauchende Probleme bei len = 0.
- -> wenn beide Komponenten null sind
+Die Lösung dafür entspricht im Quellcode einer einfachen Überprüfung auf
+ Null:
 \end_layout
 
 \begin_layout Standard
 \begin_inset listings
-lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color{lightergray}},frame=single,xleftmargin=15pt"
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
 inline false
 status open
 
 \begin_layout Plain Layout
 
-public void normalize() {
+public void normalize() throws Exception {
 \end_layout
 
 \begin_layout Plain Layout
@@ -629,12 +1260,12 @@ public void normalize() {
 
 \begin_layout Plain Layout
 
-	this.x /= len;
+	this.x = DRechnung.div(this.x, len);
 \end_layout
 
 \begin_layout Plain Layout
 
-	this.y /= len;
+	this.y = DRechnung.div(this.y, len);
 \end_layout
 
 \begin_layout Plain Layout
@@ -648,58 +1279,34 @@ public void normalize() {
 \end_layout
 
 \begin_layout Subsection
-Klasse Vektor3D
-\end_layout
-
-\begin_layout Standard
-Vereinfachungen äquivalent zu Vektor2D.
-\end_layout
-
-\begin_layout Subsubsection
-Ausgewählte Methode: sub()
-\end_layout
-
-\begin_layout Standard
-dasd
-\end_layout
-
-\begin_layout Standard
-\begin_inset listings
-lstparams "backgroundcolor={\color{lightergray}},basicstyle={\scriptsize\ttfamily},frame=single,language=Java,numbers=left,showstringspaces=false,tabsize=3,xleftmargin=15pt"
-inline false
-status open
-
-\begin_layout Plain Layout
-
-sub-code
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
 Lineare Algebra
 \end_layout
 
 \begin_layout Subsubsection
-Ausgewählte Methode: abs() für Vektor3D
+Ausgewählte Methode: 
+\family typewriter
+abs()
+\family default
+ für Vektor3D
 \end_layout
 
 \begin_layout Standard
-Diese Methode erhält als Parameter einen Vektor3D und gibt ihn so zurück,
- dass negative Komponenten als positive dargestellt werden.
+Diese Methode erhält als Parameter ein Objekt der Klasse 
+\family typewriter
+Vektor3D
+\family default
+ und gibt ihn so zurück, dass negative Komponenten als positive dargestellt
+ werden.
  Positive Komponenten bleiben unberührt.
 \end_layout
 
 \begin_layout Standard
+Der Test für die Funktionalität dieser Methode sieht wiefolgt aus:
+\end_layout
+
+\begin_layout Standard
 \begin_inset listings
-lstparams "backgroundcolor={\color{lightergray}},basicstyle={\scriptsize\ttfamily},frame=single,language=Java,numbers=left,showstringspaces=false,tabsize=3,xleftmargin=15pt"
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},showstringspaces=false,tabsize=3,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
 inline false
 status open
 
@@ -715,71 +1322,7 @@ public void absCalc3DPosTest() {
 
 \begin_layout Plain Layout
 
-	try {
-\end_layout
-
-\begin_layout Plain Layout
-
-		Vektor3D v1 = new Vektor3D(4, -2, 2);
-\end_layout
-
-\begin_layout Plain Layout
-
-		Vektor3D v2 = LineareAlgebra.abs(v1);
-\end_layout
-
-\begin_layout Plain Layout
-
-		assert (v2.x == 4.0);
-\end_layout
-
-\begin_layout Plain Layout
-
-		assert (v2.y == 2.0);
-\end_layout
-
-\begin_layout Plain Layout
-
-		assert (v2.y == 2.0);
-\end_layout
-
-\begin_layout Plain Layout
-
-	} catch (Exception e) {
-\end_layout
-
-\begin_layout Plain Layout
-
-		System.out.println(e);
-\end_layout
-
-\begin_layout Plain Layout
-
-	}
-\end_layout
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-
-@Test(expected=Exception.class)
-\end_layout
-
-\begin_layout Plain Layout
-
-public void absCalc3DNegTest() throws Exception {
-\end_layout
-
-\begin_layout Plain Layout
-
-	Vektor3D v1 = new Vektor3D(4, Double.MIN_VALUE, 2);
+	Vektor3D v1 = new Vektor3D(4, -2, 2);
 \end_layout
 
 \begin_layout Plain Layout
@@ -794,12 +1337,12 @@ public void absCalc3DNegTest() throws Exception {
 
 \begin_layout Plain Layout
 
-	assert (v2.y == 0);
+	assert (v2.y == 2.0);
 \end_layout
 
 \begin_layout Plain Layout
 
-	assert (v2.z == 2.0);
+	assert (v2.y == 2.0);
 \end_layout
 
 \begin_layout Plain Layout
@@ -813,30 +1356,23 @@ public void absCalc3DNegTest() throws Exception {
 \end_layout
 
 \begin_layout Standard
+Die dazugehörige Implementierung steht nachfolgend:
+\end_layout
+
+\begin_layout Standard
 \begin_inset listings
-lstparams "backgroundcolor={\color{lightergray}},basicstyle={\scriptsize\ttfamily},frame=single,language=Java,numbers=left,showstringspaces=false,tabsize=3,xleftmargin=15pt"
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},showstringspaces=false,tabsize=3,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
 inline false
 status open
 
 \begin_layout Plain Layout
 
-public static Vektor3D abs(Vektor3D vsrc) throws Exception {
+public static Vektor3D abs(Vektor3D vsrc) {
 \end_layout
 
 \begin_layout Plain Layout
 
 	Vektor3D v = new Vektor3D(vsrc);
-\end_layout
-
-\begin_layout Plain Layout
-
-	if ((v.x == Double.MIN_VALUE) || (v.y == Double.MIN_VALUE) || (v.z == Double.MIN_VALU
-E))
-\end_layout
-
-\begin_layout Plain Layout
-
-		throw new Exception("nicht darstellbar");
 \end_layout
 
 \begin_layout Plain Layout
@@ -885,18 +1421,50 @@ E))
 \end_layout
 
 \begin_layout Subsubsection
-Ausgewählte Methode: crossProduct() für Vektor3D
+Ausgewählte Methode: 
+\family typewriter
+crossProduct()
+\family default
+ für Vektor3D
 \end_layout
 
 \begin_layout Standard
-Bildet den orthogonalen Vektor zu den beiden gegebenen und gibt diesen zurück.
- Berechnungsvorschrift:
+Die Methode 
+\family typewriter
+crossProduct()
+\family default
+ für dreidimensionale Vektoren bildet den orthogonalen Vektor 
+\begin_inset Formula $\vec{n}$
+\end_inset
+
+ zu den beiden gegebenen 
+\begin_inset Formula $\vec{p}$
+\end_inset
+
+ und 
+\begin_inset Formula $\vec{q}$
+\end_inset
+
+ und gibt diesen zurück.
+ Die Berechnungsvorschrift dafür lautet:
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-asdasdsa
+\vec{n}=\vec{p}x\vec{q}=\left(\begin{array}{c}
+p_{x}\\
+p_{y}\\
+p_{z}
+\end{array}\right)\times\left(\begin{array}{c}
+q_{x}\\
+q_{y}\\
+q_{z}
+\end{array}\right)=\left(\begin{array}{c}
+p_{y}q_{z}-p_{z}q_{y}\\
+p_{z}q_{x}-p_{x}q_{z}\\
+p_{x}q_{y}-p_{y}q_{x}
+\end{array}\right)
 \]
 
 \end_inset
@@ -905,8 +1473,69 @@ asdasdsa
 \end_layout
 
 \begin_layout Standard
+Am besten lässt sich diese mathematische Formel mit der 'Rechten-Hand-Regel'
+ illustrieren [
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Die-'Rechte-Hand-Regel'."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+].
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Die-'Rechte-Hand-Regel'."
+
+\end_inset
+
+Die 'Rechte-Hand-Regel'.
+\begin_inset Graphics
+	filename img/RechteHand.png
+	lyxscale 10
+	scale 10
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Ein erster Test für das Kreuzprodukt findet sich nachfolgend:
+\end_layout
+
+\begin_layout Standard
 \begin_inset listings
-lstparams "backgroundcolor={\color{lightergray}},basicstyle={\scriptsize\ttfamily},frame=single,language=Java,numbers=left,showstringspaces=false,tabsize=3,xleftmargin=15pt"
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},showstringspaces=false,tabsize=3,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
 inline false
 status open
 
@@ -961,8 +1590,12 @@ public void crossProd3DLACalcTest() {
 \end_layout
 
 \begin_layout Standard
+Die daraufhin entwickelte Implementierung sieht wiefolgt aus:
+\end_layout
+
+\begin_layout Standard
 \begin_inset listings
-lstparams "backgroundcolor={\color{lightergray}},basicstyle={\scriptsize\ttfamily},frame=single,language=Java,numbers=left,showstringspaces=false,tabsize=3,xleftmargin=15pt"
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},showstringspaces=false,tabsize=3,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
 inline false
 status open
 
@@ -973,17 +1606,17 @@ public static Vektor3D crossProduct(Vektor3D v1, Vektor3D v2) {
 
 \begin_layout Plain Layout
 
-	double x = v1.y * v2.z - v1.z * v2.y;
+	double x = DRechnung.sub(DRechnung.mult(v1.y, v2.z), DRechnung.mult(v1.z, v2.y));
 \end_layout
 
 \begin_layout Plain Layout
 
-	double y = v1.z * v2.x - v1.x * v2.z;
+	double y = DRechnung.sub(DRechnung.mult(v1.z, v2.x), DRechnung.mult(v1.x, v2.z));
 \end_layout
 
 \begin_layout Plain Layout
 
-	double z = v1.x * v2.y - v1.y * v2.x;
+	double z = DRechnung.sub(DRechnung.mult(v1.x, v2.y), DRechnung.mult(v1.y, v2.x));
 \end_layout
 
 \begin_layout Plain Layout
