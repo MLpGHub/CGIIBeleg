@@ -5,12 +5,12 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="lib" path="libs/lwjgl2/jars/lwjgl_util.jar">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="CGIIBeleg/libs/lwjgl2/natives-win"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/home/emanuel/eclipse/workspace/CGIIBeleg/CGIIBeleg/libs/lwjgl2/native-linux"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="libs/lwjgl2/jars/lwjgl.jar">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="CGIIBeleg/libs/lwjgl2/natives-win"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/home/emanuel/eclipse/workspace/CGIIBeleg/CGIIBeleg/libs/lwjgl2/native-linux"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>

@@ -33,11 +33,11 @@ import org.lwjgl.opengl.Display;
 //https://www.khronos.org/opengl/wiki/Main_Page
 
 public class PentagonDepth extends LWJGLFenster {
-	private String vertexSource = LoadShader.load("shader/vShader.vs");
-	private String fragmentSource = LoadShader.load("shader/fShader.fs");
+	private String vertexSource = LoadShader.load("shader/pentagon.vs");
+	private String fragmentSource = LoadShader.load("shader/pentagon.fs");
 	
 	public PentagonDepth() {
-		super("TriangleDepth", 1200, 800);
+		super("PentagonDepth", 1200, 800);
 		initDisplay();
 	}
 	
