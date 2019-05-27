@@ -222,6 +222,14 @@ public class LineareAlgebra {
 			v.z = -v.z;
 		return v;
 	}
+	
+	public static Vektor2D negate(Vektor2D v) {
+		return new Vektor2D(-v.x, -v.y);
+	}
+	
+	public static Vektor3D negate(Vektor3D v) {
+		return new Vektor3D(-v.x, -v.y, -v.z);
+	}
 
 	public static void show(Vektor2D v) {
 		System.out.println("Vektor2D [" + v.x + ", " + v.y + "]");

@@ -1,9 +1,9 @@
 package beleg;
 
 public class SimpleBehaviour implements Verhalten {
-	private SimpleObject so;
+	private BeweglichesObjekt so;
 	
-	public SimpleBehaviour(SimpleObject so) {
+	public SimpleBehaviour(BeweglichesObjekt so) {
 		this.so = so;
 	}
 	
