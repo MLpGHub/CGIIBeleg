@@ -1,2 +1,5 @@
-/.metadata/
-/.recommenders/
+CGIIBeleg/.metadata
+CGIIBeleg/.classpath
+CGIIBeleg/.project
+CGIIBeleg/.settings
+CGIIBeleg/bin

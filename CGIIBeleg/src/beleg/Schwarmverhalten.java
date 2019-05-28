@@ -3,10 +3,12 @@ package beleg;
 public class Schwarmverhalten implements Verhalten {
 	private Vogel vogel;
 	private double dist;
+	private double max_speed;
 
-	public Schwarmverhalten(Vogel vogel, double dist) {
+	public Schwarmverhalten(Vogel vogel, double dist, double max_speed) {
 		this.vogel = vogel;
 		this.dist = dist;
+		this.max_speed = max_speed;
 	}
 
 	public Vektor3D seperation() {
@@ -75,8 +77,11 @@ public class Schwarmverhalten implements Verhalten {
 			zusammenhalt.mult(0.01);
 
 			vogel.speed.add(seperation);
-			//vogel.speed.add(ausrichtung);
-			//vogel.speed.add(zusammenhalt);
+			vogel.speed.add(ausrichtung);
+			vogel.speed.add(zusammenhalt);
+			if (vogel.speed.length() > max_speed) {
+				vogel.speed = LineareAlgebra.mult(LineareAlgebra.normalize(vogel.speed), max_speed); 
+			}
 			vogel.pos.add(vogel.speed);
 		} catch (Exception e) {
 		}
