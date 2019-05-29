@@ -36,7 +36,8 @@ public class Vogelschwarm {
 	
 	public void update() {
 		for (int i = 0; i < schwarm.size(); i++) {
-			if (i == 0) System.out.println("pos[" + schwarm.get(i).pos.x + ", " + schwarm.get(i).pos.y + "]");
+			//if (i == 0) System.out.println("pos[" + schwarm.get(i).pos.x + ", " + schwarm.get(i).pos.y + "]");
+			//if (i == 0) System.out.println("speed[" + schwarm.get(i).speed.x + ", " + schwarm.get(i).speed.y + "]");
 			schwarm.get(i).update();
 		}
 	}

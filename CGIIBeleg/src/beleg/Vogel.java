@@ -6,24 +6,57 @@ import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glVertex3f;
 
+import org.lwjgl.util.vector.Vector3f;
+
 public class Vogel extends BeweglichesObjekt {
 	public Vogelschwarm schwarm;
+	public Model model;
 	
-	public Vogel(int id, Vektor3D pos, Vektor3D speed, Vektor3D accel, Vogelschwarm schwarm) {
+	public Vogel(int id, Vektor3D pos, Vektor3D speed, Vektor3D accel, Vogelschwarm schwarm, Model model) {
 		super(id, pos, speed, accel);
 		this.schwarm = schwarm;
+		this.model = model;
 	}
 	
 	public void render() {
 		float px = (float)pos.x;
 		float py = (float)pos.y;
 		float pz = (float)pos.z;
+		int angle = 0;
+		try {
+			angle = (int)LineareAlgebra.angleDegree(new Vektor3D(1, 0, 0), speed);
+			if (angle < 0) angle += 360;
+			if (id == 0) System.out.println("angle = " + angle);
+		} catch (Exception e) {
+		}
 		
-		glBegin(GL_TRIANGLES);
-		glVertex3f(px, py + 0.01f, pz);
-		glVertex3f(px, py - 0.01f, pz);
-		glVertex3f(px + 0.02f, py, pz);
-		glEnd();
+		if (model != null) {
+			glBegin(GL_TRIANGLES);
+			for (int i = 0; i < model.faces.size(); i++) {
+				Vector3f v1 = model.vertices.get(model.faces.get(i).verticeIndices.get(0));
+				Vector3f v2 = model.vertices.get(model.faces.get(i).verticeIndices.get(0));
+				Vector3f v3 = model.vertices.get(model.faces.get(i).verticeIndices.get(0));
+				glVertex3f(v1.x, v1.y, v1.z);
+				glVertex3f(v2.x, v2.y, v2.z);
+				glVertex3f(v3.x, v3.y, v3.z);
+				System.out.println("v1[" + v1.x + ", " + v1.y + ", " + v1.z + "]");
+				System.out.println("v2[" + v2.x + ", " + v2.y + ", " + v2.z + "]");
+				System.out.println("v3[" + v3.x + ", " + v3.y + ", " + v3.z + "]");
+			}
+			glEnd();
+		} else {
+			glBegin(GL_TRIANGLES);
+			/*
+			glVertex3f(px, py + 0.01f, pz);
+			glVertex3f(px, py - 0.01f, pz);
+			glVertex3f(px + 0.02f, py, pz);
+			*/
+			
+			glVertex3f(px + (float)Math.sin(angle) * 0.01f, py + (float)Math.cos(angle) * 0.01f, pz);
+			glVertex3f(px + (float)Math.sin(angle) * (-0.01f), py + (float)Math.cos(angle) * (-0.01f), pz);
+			glVertex3f(px + (float)Math.cos(angle) * 0.02f, py + (float)Math.sin(angle) * 0.02f, pz);
+			glEnd();
+		}
 	}
 	
 	public void update() {

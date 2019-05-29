@@ -4,8 +4,10 @@ import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
+import static org.lwjgl.opengl.GL11.GL_PROJECTION;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
+import static org.lwjgl.opengl.GL11.glFrustum;
 import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glClear;
@@ -22,8 +24,11 @@ import static org.lwjgl.opengl.GL11.GL_TRIANGLE_FAN;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glVertex3f;
+import static org.lwjgl.opengl.GL11.glScalef;
 
 import org.lwjgl.opengl.Display;
+
+import java.io.File;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Vogelsimulation extends LWJGLFenster {
@@ -35,14 +40,22 @@ public class Vogelsimulation extends LWJGLFenster {
 	public Vogelsimulation() {
 		super("Vogelsimulation", 1200, 800);
 		schwarm = Vogelschwarm.getInstance();
+		Model vogelModel = null;
+		try {
+			vogelModel = OBJLoader.loadModel(new File("obj/adler1.obj"));
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 		for (int i = 0; i < 5; i++) {
-			Vektor3D pos = new Vektor3D(r.nextDouble(0.5)-0.25, r.nextDouble(0.5)-0.25, 0);
+			//Vektor3D pos = new Vektor3D(r.nextDouble(0.5)-0.25, r.nextDouble(0.5)-0.25, 0);
+			Vektor3D pos = new Vektor3D(0, 0, 0);
 			assert(pos.x < 0.5 && pos.x > -0.5);
 			assert(pos.y < 0.5 && pos.y > -0.5);
 			Vektor3D speed = new Vektor3D(r.nextDouble(0.00005), r.nextDouble(0.00005), 0);
 			Vektor3D accel = new Vektor3D();
-			Vogel v = new Vogel(i, pos, speed, accel, schwarm);
-			v.verhalten = new Schwarmverhalten(v, 0.5, 0.0001);
+			Vogel v = new Vogel(i, pos, speed, accel, schwarm, null); //null = vogelModel
+			//v.verhalten = new Schwarmverhalten(v, 0.5, 0.0001);
+			v.verhalten = new SchwarmverhaltenMaus(v, 0.1, 0.0001);
 			schwarm.add(v);
 		}
 		initDisplay();
@@ -68,11 +81,17 @@ public class Vogelsimulation extends LWJGLFenster {
 	public void transform() {
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
+		/*
+		glScalef(0.5f, 0.5f, 0.5f);
+		glMatrixMode(GL_PROJECTION);
+		glFrustum(2, 2, 2, 2, 1, 20);
+		*/
 	}
 	
 	public void renderLoop() {
 		prepareShader();
 		glEnable(GL_DEPTH_TEST);
+		
 		while (!Display.isCloseRequested()) {
 			glClearColor(0.4941f, 0.7529f, 0.9333f, 1);
 			glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
@@ -80,7 +99,6 @@ public class Vogelsimulation extends LWJGLFenster {
 			transform();
 			
 			double time = System.nanoTime()/1e7;
-			System.out.println("time is " + time);
 			if ((int)time%1 == 0)
 				schwarm.update();
 			schwarm.render();

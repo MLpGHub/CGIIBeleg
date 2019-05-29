@@ -1,22 +1,18 @@
 package beleg;
 
-//https://www.youtube.com/watch?v=izKAvSV3qk0&list=PL19F2453814E0E315&index=24
-
-/**
- * Klasse für allgemeine obj Dateien
- * 
- */
 import java.util.ArrayList;
-import java.util.List;
 import org.lwjgl.*;
+import org.lwjgl.util.vector.Vector3f;
 
 public class Model {
-	public List<Vektor3D> vertices = new ArrayList<Vektor3D>();
-	public List<Vektor3D> normals = new ArrayList<Vektor3D>();
-	public List<Face> faces = new ArrayList<Face>();
+	public ArrayList<Vector3f> vertices;
+	public ArrayList<Vector3f> normals;
+	public ArrayList<Face> faces;
 	
 	public Model() {
-		
+		vertices = new ArrayList<Vector3f>();
+		normals = new ArrayList<Vector3f>();
+		faces = new ArrayList<Face>();
 	}
 
 }

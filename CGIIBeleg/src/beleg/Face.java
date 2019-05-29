@@ -1,11 +1,13 @@
 package beleg;
 
+import java.util.ArrayList;
+
 public class Face {
-	public Vektor3D vertex = new Vektor3D();
-	public Vektor3D normal = new Vektor3D();
-	public Face(Vektor3D vertex, Vektor3D normal) {
-		
-		this.vertex =vertex;
-		this.normal = normal;
+	public ArrayList<Integer> verticeIndices;
+	public int normalIndex;
+	
+	public Face(ArrayList<Integer> verticeIndices, int normalIndex) {
+		this.verticeIndices = verticeIndices;
+		this.normalIndex = normalIndex;
 	}
 }
