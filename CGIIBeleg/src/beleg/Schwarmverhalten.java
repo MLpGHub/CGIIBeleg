@@ -1,14 +1,19 @@
 package beleg;
 
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
+
 public class Schwarmverhalten implements Verhalten {
 	private Vogel vogel;
 	private double dist;
 	private double max_speed;
+	private boolean followMouse;
 
-	public Schwarmverhalten(Vogel vogel, double dist, double max_speed) {
+	public Schwarmverhalten(Vogel vogel, double dist, double max_speed, boolean followMouse) {
 		this.vogel = vogel;
 		this.dist = dist;
 		this.max_speed = max_speed;
+		this.followMouse = followMouse;
 	}
 
 	public Vektor3D seperation() {
@@ -16,7 +21,9 @@ public class Schwarmverhalten implements Verhalten {
 		for (int i = 0; i < vogel.schwarm.getSchwarmgroesse(); i++) {
 			Vogel v = vogel.schwarm.getVogel(i);
 			try {
-				if (LineareAlgebra.euklDistance(vogel.pos, v.pos) < dist)
+				double ed = LineareAlgebra.euklDistance(vogel.pos, v.pos);
+				//if (ed == 0) System.out.println("collision");
+				if (ed < dist * 2. / 3.)
 					force.add(LineareAlgebra.sub(vogel.pos, v.pos));
 			} catch (Exception e) {
 			}
@@ -26,6 +33,7 @@ public class Schwarmverhalten implements Verhalten {
 		} catch (Exception e) {
 		}
 		
+		//if (vogel.id == 0) System.out.println("seperation[" + force.x + ", " + force.y + ", " + force.z + "]");
 		return force;
 	}
 
@@ -44,6 +52,7 @@ public class Schwarmverhalten implements Verhalten {
 		} catch (Exception e) {
 		}
 		
+		//if (vogel.id == 0) System.out.println("ausrichtung[" + force.x + ", " + force.y + ", " + force.z + "]");
 		return force;
 	}
 
@@ -63,6 +72,7 @@ public class Schwarmverhalten implements Verhalten {
 		} catch (Exception e) {
 		}
 		
+		//if (vogel.id == 0) System.out.println("zusammenhalt[" + force.x + ", " + force.y + ", " + force.z + "]");
 		return force;
 	}
 
@@ -71,18 +81,35 @@ public class Schwarmverhalten implements Verhalten {
 		Vektor3D ausrichtung = ausrichtung();
 		Vektor3D zusammenhalt = zusammenhalt();
 
+		double mx = Mouse.getX() / (double)Display.getDisplayMode().getWidth() * 2 - 1;
+		double my = Mouse.getY() / (double)Display.getDisplayMode().getHeight() * 2 - 1;
+		Vektor3D mouse = new Vektor3D(mx, my, 0);
+		//System.out.println("mouse: " + mx + ", " + my);
+		
 		try {
-			seperation.mult(1.0);
-			ausrichtung.mult(0.12);
-			zusammenhalt.mult(0.01);
-
-			vogel.speed.add(seperation);
-			vogel.speed.add(ausrichtung);
-			vogel.speed.add(zusammenhalt);
+			mouse.sub(vogel.pos);
+			mouse.normalize();
+			mouse.mult(1); // 0.8
+			
+			if (followMouse) vogel.accel.add(mouse);
+			
+			seperation.mult(1.0); // 1.0
+			ausrichtung.mult(0.1); // 0.12
+			zusammenhalt.mult(0.1); // 0.01
+			
+			vogel.accel.add(seperation);
+			vogel.accel.add(ausrichtung);
+			vogel.accel.add(zusammenhalt);
+			
+			vogel.speed.add(vogel.accel);
+			
 			if (vogel.speed.length() > max_speed) {
 				vogel.speed = LineareAlgebra.mult(LineareAlgebra.normalize(vogel.speed), max_speed); 
 			}
+			
 			vogel.pos.add(vogel.speed);
+			
+			vogel.resetAcceleration();
 		} catch (Exception e) {
 		}
 		/*

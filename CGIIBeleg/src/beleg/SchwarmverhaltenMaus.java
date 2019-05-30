@@ -9,7 +9,7 @@ public class SchwarmverhaltenMaus implements Verhalten {
 	public double max_speed;
 	
 	public SchwarmverhaltenMaus(Vogel vogel, double dist, double max_speed) {
-		schwarmverhalten = new Schwarmverhalten(vogel, dist, max_speed);
+		//schwarmverhalten = new Schwarmverhalten(vogel, dist, max_speed);
 		this.vogel = vogel;
 		this.max_speed = max_speed;
 	}

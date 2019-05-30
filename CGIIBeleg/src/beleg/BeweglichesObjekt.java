@@ -28,5 +28,11 @@ public abstract class BeweglichesObjekt extends BasisObjekt {
 		this.verhalten = v;
 	}
 	
+	public void resetAcceleration() {
+		try {
+			accel.mult(0);
+		} catch (Exception e) {}
+	}
+	
 	public abstract void update();
 }

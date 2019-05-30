@@ -7,8 +7,10 @@ import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.GL_PROJECTION;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
+import static org.lwjgl.opengl.GL11.glOrtho;
 import static org.lwjgl.opengl.GL11.glFrustum;
 import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL20.glCreateProgram;
@@ -46,16 +48,16 @@ public class Vogelsimulation extends LWJGLFenster {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		for (int i = 0; i < 5; i++) {
-			//Vektor3D pos = new Vektor3D(r.nextDouble(0.5)-0.25, r.nextDouble(0.5)-0.25, 0);
-			Vektor3D pos = new Vektor3D(0, 0, 0);
+		for (int i = 0; i < 10; i++) {
+			Vektor3D pos = new Vektor3D(r.nextDouble(0.8)-0.4, r.nextDouble(0.8)-0.4, 0);
+			//Vektor3D pos = new Vektor3D(0, 0, 0);
 			assert(pos.x < 0.5 && pos.x > -0.5);
 			assert(pos.y < 0.5 && pos.y > -0.5);
-			Vektor3D speed = new Vektor3D(r.nextDouble(0.00005), r.nextDouble(0.00005), 0);
+			Vektor3D speed = new Vektor3D(r.nextDouble(0.0005), r.nextDouble(0.0005), 0);
 			Vektor3D accel = new Vektor3D();
 			Vogel v = new Vogel(i, pos, speed, accel, schwarm, null); //null = vogelModel
-			//v.verhalten = new Schwarmverhalten(v, 0.5, 0.0001);
-			v.verhalten = new SchwarmverhaltenMaus(v, 0.1, 0.0001);
+			v.verhalten = new Schwarmverhalten(v, 0.08, 0.0002, true);
+			//v.verhalten = new SchwarmverhaltenMaus(v, 0.1, 0.0001);
 			schwarm.add(v);
 		}
 		initDisplay();
@@ -79,8 +81,17 @@ public class Vogelsimulation extends LWJGLFenster {
 	}
 	
 	public void transform() {
+		/*
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glOrtho(0, WIDTH, HEIGHT, 0, 0, 1);
+		glMatrixMode(GL_MODELVIEW);
+		glDisable(GL_DEPTH_TEST);
+		*/
+		
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
+		
 		/*
 		glScalef(0.5f, 0.5f, 0.5f);
 		glMatrixMode(GL_PROJECTION);
