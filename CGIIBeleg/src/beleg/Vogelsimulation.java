@@ -48,14 +48,14 @@ public class Vogelsimulation extends LWJGLFenster {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 200; i++) {
 			//Vektor3D pos = new Vektor3D(0, 0, 0);
 			Vektor3D pos = new Vektor3D(r.nextInt(WIDTH), r.nextInt(HEIGHT), 0);
 			System.out.println(pos.x + ", " + pos.y);
 			Vektor3D speed = new Vektor3D(r.nextDouble(0.5), r.nextDouble(0.5), 0);
 			Vektor3D accel = new Vektor3D();
 			Vogel v = new Vogel(i, pos, speed, accel, schwarm, null); //null = vogelModel
-			v.verhalten = new Schwarmverhalten(v, 50, 0.05, 1, true);
+			v.verhalten = new Schwarmverhalten(v, 20, 0.05, 3, true);
 			schwarm.add(v);
 		}
 		initDisplay();

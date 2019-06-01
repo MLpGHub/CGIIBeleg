@@ -2,16 +2,18 @@
 Hier wird die Fertigstellung unseres Beleges für das Modul Computergrafik II realisiert.
 
 ## Notizen für die Umsetzung des Beleges
-* Sowohl Marco als auch der Student von '17 arbeiten mit der Fenstergröße als Berechnungsgrundlage und einer Orthografischen Projektion zur Darstellung.
-* min\_speed könnte zwar für die "Zufälligkeit" (keine Hex-Raster) nützlich sein, bewirkt in der Praxis derzeit abe rscheinabr eine Aufhebung des Schwarmverhaltens.
 * Wichtiger Punkt: Sobald zwei Objekte/Vögel übereinander sind (exakt, dist=0), ergibt der berechnete Seperations-Vektor (0, 0, 0), womit auch keine Seperation mehr stattfinden kann.
-* Lösung kann evtl. sein, alles auf Fensterbreite und -höhe umzubauen. Theoretisch sollte es aber auch mit dem OpenGL-Bereich funktionieren.
+* UPDATE: Problem scheinbar gefixt. Lösung im nächsten Absatz
 
-* UPDATE: Code jetzt auf Lösung mit Displaygröße angepasst. Schwarmverhalten funktioniert irgendwie noch nicht. Ansonsten passt's aber erstmal.
-	* Code muss auf jeden Fall noch aufgeräumt werden! (zB überschüssige Variablen weg)
-	* evtl. update() gleich in BeweglichesObjekt programmieren
-	* Vorteil: größere Zahlen, leichter anpassbar (von den Zahlenwerten her)
+## Lösung für DAS PROBLEM ;-)
 
+Ich habe mal die Partikelsimulation 10 von Marco (vollständiges Schwarmverhalten mit Maus) auf unser Projekt geportet, um zu sehen, ob irgendetwas in unseren Berechungsklassen komisch ist. Es hat grundlegend funktioniert und sieht auch dem aus dem ursprünglichen Projekt sehr ähnlich. [1] Die Lösung für unseren Beleg war nun, die Parameter einfach zu ändern. Die Distanz zwischen Punkten (der Abstand, in dem gesucht wird) darf nicht so groß sein, sonst entsteht ein Gittermuster. Außerdem darf die maximale Geschwindigkeit nicht zu niedrig sein. Die Geschwindigkeit wird bei der Berechnung (Schwarmverhalten::update()) auch nicht ins Intervall eingepasst, sondern immer auf die maximale Geschwindigkeit gesetzt. So fliegt ein Vogel eben auch mal über seine Zielgeschwindigkeit hinaus. :-)
+
+Je niedriger man die Geschwindigkeit dann wählt, desto mehr ordnen sich die Objekte als Raster (eben unser Fehler). Das hat auch den Nachteil, dass die Vögel immer ganz schön umherschwirren und sich nicht mal ruhig mit dem Wind treiben lassen. :-) Vielleicht finden wir dafür noch eine Lösung.
+
+Uns bleibt also letztendlich nur noch, die Parameter etwas anzupassen, das Modell richtig zu laden (bzw. die Rotation der Dreiecke hinzubekommen) und am Ende alles mal in den Shader zu packen. Klingt doch machbar, oder? ;-)
+
+[1] Marco berechnet in den drei Funktionen zum Schwarmverhalten die normierten Vektoren über LineareAlgebra.normalize. Die Funktionssignatur ist aber `public Vektor3D normalize(Vektor3D v)`, d.h. es wird der normierte Vektor zurückgegeben, den er jedoch nicht abfängt und speichert. Streng genommen wird also gar ncht normiert, was nur zu Verwirrung führen kann. ;-)
 
 ## Aufgabenstellung
 
