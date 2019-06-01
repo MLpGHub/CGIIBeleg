@@ -6,12 +6,14 @@ import org.lwjgl.opengl.Display;
 public class Schwarmverhalten implements Verhalten {
 	private Vogel vogel;
 	private double dist;
+	private double min_speed;
 	private double max_speed;
 	private boolean followMouse;
 
-	public Schwarmverhalten(Vogel vogel, double dist, double max_speed, boolean followMouse) {
+	public Schwarmverhalten(Vogel vogel, double dist, double min_speed, double max_speed, boolean followMouse) {
 		this.vogel = vogel;
 		this.dist = dist;
+		this.min_speed = min_speed;
 		this.max_speed = max_speed;
 		this.followMouse = followMouse;
 	}
@@ -103,8 +105,12 @@ public class Schwarmverhalten implements Verhalten {
 			
 			vogel.speed.add(vogel.accel);
 			
-			if (vogel.speed.length() > max_speed) {
+			double length = vogel.speed.length();
+			
+			if (length > max_speed) {
 				vogel.speed = LineareAlgebra.mult(LineareAlgebra.normalize(vogel.speed), max_speed); 
+			} else if (length < min_speed) {
+				//vogel.speed = LineareAlgebra.mult(LineareAlgebra.normalize(vogel.speed), min_speed);
 			}
 			
 			vogel.pos.add(vogel.speed);
