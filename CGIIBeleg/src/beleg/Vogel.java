@@ -1,6 +1,5 @@
 package beleg;
 
-import static org.lwjgl.opengl.GL11.GL_TRIANGLE_FAN;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glEnd;
@@ -13,7 +12,7 @@ public class Vogel extends BeweglichesObjekt {
 	public Model model;
 	
 	public Vogel(int id, Vektor3D pos, Vektor3D speed, Vektor3D accel, Vogelschwarm schwarm, Model model) {
-		super(id, pos, speed, accel);
+		super(id, pos, speed);
 		this.schwarm = schwarm;
 		this.model = model;
 	}
@@ -23,6 +22,7 @@ public class Vogel extends BeweglichesObjekt {
 		float py = (float)pos.y;
 		float pz = (float)pos.z;
 		int angle = 0;
+		
 		try {
 			angle = (int)LineareAlgebra.angleDegree(new Vektor3D(1, 0, 0), speed);
 			if (speed.y < 0) angle = 360 - angle;
@@ -46,24 +46,14 @@ public class Vogel extends BeweglichesObjekt {
 			}
 			glEnd();
 		} else {
-			//POGL.renderObjectWithForces((float)pos.x, (float)pos.y, 10, new Vektor2D(speed.x, speed.y), new Vektor2D(accel.x, accel.y));
+			POGL.renderObjectWithForces((float)pos.x, (float)pos.y, 3, new Vektor2D(speed.x, speed.y), new Vektor2D());
 			
 			glBegin(GL_TRIANGLES);
-			
-			//glVertex3f(px, py + 0.01f, pz);
-			//glVertex3f(px, py - 0.01f, pz);
-			//glVertex3f(px + 0.02f, py, pz);
-			
-			//angle = 90;
-			//glVertex3f(px - (float)Math.sin(angle) * 0.01f, py + (float)Math.cos(angle) * 0.01f, pz);
-			//glVertex3f(px - (float)Math.sin(angle) * (-0.01f), py + (float)Math.cos(angle) * (-0.01f), pz);
-			//glVertex3f(px + (float)Math.cos(angle) * 0.02f, py + (float)Math.sin(angle) * 0.02f, pz);
-			//*/
-			
+			/*
 			glVertex3f(px, py+4, pz);
 			glVertex3f(px, py-4, pz);
 			glVertex3f(px+10, py, pz);
-			
+			*/
 			/*
 			glVertex3f(px - (float)Math.sin(angle) * 4, py + (float)Math.sin(angle) * 4, pz);
 			glVertex3f(px - (float)Math.sin(angle) * (-4), py + (float)Math.sin(angle) * (-4), pz);
@@ -72,9 +62,5 @@ public class Vogel extends BeweglichesObjekt {
 			glEnd();
 			
 		}
-	}
-	
-	public void update() {
-		if (verhalten != null) verhalten.update();
 	}
 }

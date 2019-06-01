@@ -9,6 +9,7 @@ public class Schwarmverhalten implements Verhalten {
 	private double min_speed;
 	private double max_speed;
 	private boolean followMouse;
+	private Vektor3D accel;
 
 	public Schwarmverhalten(Vogel vogel, double dist, double min_speed, double max_speed, boolean followMouse) {
 		this.vogel = vogel;
@@ -16,11 +17,13 @@ public class Schwarmverhalten implements Verhalten {
 		this.min_speed = min_speed;
 		this.max_speed = max_speed;
 		this.followMouse = followMouse;
+		this.accel = new Vektor3D();
 	}
 
 	public Vektor3D seperation() {
 		Vektor3D force = new Vektor3D();
 		for (int i = 0; i < vogel.schwarm.getSchwarmgroesse(); i++) {
+			if (vogel.id == i) continue;
 			Vogel v = vogel.schwarm.getVogel(i);
 			try {
 				double ed = LineareAlgebra.euklDistance(vogel.pos, v.pos);
@@ -42,6 +45,7 @@ public class Schwarmverhalten implements Verhalten {
 	public Vektor3D ausrichtung() {
 		Vektor3D force = new Vektor3D();
 		for (int i = 0; i < vogel.schwarm.getSchwarmgroesse(); i++) {
+			if (vogel.id == i) continue;
 			Vogel v = vogel.schwarm.getVogel(i);
 			try {
 				if (LineareAlgebra.euklDistance(vogel.pos, v.pos) < dist)
@@ -61,7 +65,7 @@ public class Schwarmverhalten implements Verhalten {
 	public Vektor3D zusammenhalt() {
 		Vektor3D force = new Vektor3D();
 		for (int i = 0; i < vogel.schwarm.getSchwarmgroesse(); i++) {
-			//if (i == vogel.id) continue; 
+			if (i == vogel.id) continue; 
 			Vogel v = vogel.schwarm.getVogel(i);
 			try {
 				if (LineareAlgebra.euklDistance(vogel.pos, v.pos) < dist)
@@ -77,66 +81,53 @@ public class Schwarmverhalten implements Verhalten {
 		//if (vogel.id == 0) System.out.println("zusammenhalt[" + force.x + ", " + force.y + ", " + force.z + "]");
 		return force;
 	}
-
-	public void update() {
-		Vektor3D seperation = seperation();
-		Vektor3D ausrichtung = ausrichtung();
-		Vektor3D zusammenhalt = zusammenhalt();
-
-		//double mx = Mouse.getX() / (double)Display.getDisplayMode().getWidth() * 2 - 1;
-		//double my = Mouse.getY() / (double)Display.getDisplayMode().getHeight() * 2 - 1;
+	
+	public Vektor3D folgeMaus() {
 		double mx = Mouse.getX();
 		double my = Display.getDisplayMode().getHeight() - Mouse.getY();
 		Vektor3D mouse = new Vektor3D(mx, my, 0);
-		//System.out.println("mouse: " + mx + ", " + my);
-		
 		try {
 			mouse.sub(vogel.pos);
-			//mouse.normalize();
-			mouse.mult(1); // 0.8
-			
-			if (followMouse) vogel.accel.add(mouse);
-			
+			mouse.normalize();
+		} catch (Exception e) {
+		}
+		return mouse;
+	}
+	
+	public void resetAcceleration() {
+		try {
+			accel.mult(0);
+		} catch (Exception e) {}
+	}
+
+	public void update() {
+		Vektor3D maus = folgeMaus();
+		Vektor3D seperation = seperation();
+		Vektor3D ausrichtung = ausrichtung();
+		Vektor3D zusammenhalt = zusammenhalt();
+		
+		try {
+			maus.mult(0.8); // 0.8
 			seperation.mult(1.0); // 1.0
 			ausrichtung.mult(0.12); // 0.12
 			zusammenhalt.mult(0.01); // 0.01
 			
-			vogel.accel.add(seperation);
-			vogel.accel.add(ausrichtung);
-			vogel.accel.add(zusammenhalt);
+			if (followMouse) accel.add(maus);
+			accel.add(seperation);
+			accel.add(ausrichtung);
+			accel.add(zusammenhalt);
 			
-			vogel.speed.add(vogel.accel);
+			vogel.speed.add(accel);
 			
 			double length = vogel.speed.length();
 			
-			if (length > max_speed) {
-				vogel.speed = LineareAlgebra.mult(LineareAlgebra.normalize(vogel.speed), max_speed); 
-			} else if (length < min_speed) {
-				//vogel.speed = LineareAlgebra.mult(LineareAlgebra.normalize(vogel.speed), min_speed);
-			}
+			//max bzw. min speed evtl. hier
+			vogel.speed = LineareAlgebra.mult(LineareAlgebra.normalize(vogel.speed), max_speed); 
 			
 			vogel.pos.add(vogel.speed);
 			
-			vogel.resetAcceleration();
+			resetAcceleration();
 		} catch (Exception e) {
 		}
-		/*
-		if (vogel.pos.x >= 1) {
-			vogel.pos.x = 1;
-			if (vogel.speed.x > 0) vogel.speed.x = 0;
-		}
-		if (vogel.pos.x <= -1) {
-			vogel.pos.x = -1;
-			if (vogel.speed.x < 0) vogel.speed.x = 0;
-		}
-		if (vogel.pos.y >= 1) {
-			vogel.pos.y = 1;
-			if (vogel.speed.y > 0) vogel.speed.y = 0;
-		}
-		if (vogel.pos.y <= -1) {
-			vogel.pos.y = -1;
-			if (vogel.speed.y < 0) vogel.speed.y = 0;
-		}
-		*/
 	}
 }
