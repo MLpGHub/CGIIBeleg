@@ -49,14 +49,18 @@ public class Vogelsimulation extends LWJGLFenster {
 			System.out.println(e);
 		}
 		for (int i = 0; i < 10; i++) {
-			Vektor3D pos = new Vektor3D(r.nextDouble(0.8)-0.4, r.nextDouble(0.8)-0.4, 0);
+			//Vektor3D pos = new Vektor3D(r.nextDouble(0.8)-0.4, r.nextDouble(0.8)-0.4, 0);
 			//Vektor3D pos = new Vektor3D(0, 0, 0);
-			assert(pos.x < 0.5 && pos.x > -0.5);
-			assert(pos.y < 0.5 && pos.y > -0.5);
-			Vektor3D speed = new Vektor3D(r.nextDouble(0.0005), r.nextDouble(0.0005), 0);
+			Vektor3D pos = new Vektor3D(r.nextInt(WIDTH), r.nextInt(HEIGHT), 0);
+			System.out.println(pos.x + ", " + pos.y);
+			//assert(pos.x < 0.5 && pos.x > -0.5);
+			//assert(pos.y < 0.5 && pos.y > -0.5);
+			//Vektor3D speed = new Vektor3D(r.nextDouble(0.0005), r.nextDouble(0.0005), 0);
+			Vektor3D speed = new Vektor3D(r.nextInt(5), r.nextInt(5), 0);
 			Vektor3D accel = new Vektor3D();
 			Vogel v = new Vogel(i, pos, speed, accel, schwarm, null); //null = vogelModel
-			v.verhalten = new Schwarmverhalten(v, 0.08, 0.00005, 0.0002, true);
+			//v.verhalten = new Schwarmverhalten(v, 0.08, 0.00005, 0.0002, true);
+			v.verhalten = new Schwarmverhalten(v, 100, 20, 1, true);
 			//v.verhalten = new SchwarmverhaltenMaus(v, 0.1, 0.0001);
 			schwarm.add(v);
 		}
@@ -81,16 +85,14 @@ public class Vogelsimulation extends LWJGLFenster {
 	}
 	
 	public void transform() {
-		/*
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		glOrtho(0, WIDTH, HEIGHT, 0, 0, 1);
 		glMatrixMode(GL_MODELVIEW);
 		glDisable(GL_DEPTH_TEST);
-		*/
 		
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
+		//glMatrixMode(GL_MODELVIEW);
+		//glLoadIdentity();
 		
 		/*
 		glScalef(0.5f, 0.5f, 0.5f);
@@ -110,9 +112,9 @@ public class Vogelsimulation extends LWJGLFenster {
 			transform();
 			
 			double time = System.nanoTime()/1e7;
+			schwarm.render();
 			if ((int)time%1 == 0)
 				schwarm.update();
-			schwarm.render();
 			Display.update();
 		}
 	}

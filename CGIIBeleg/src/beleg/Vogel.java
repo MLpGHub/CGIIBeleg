@@ -26,7 +26,7 @@ public class Vogel extends BeweglichesObjekt {
 		try {
 			angle = (int)LineareAlgebra.angleDegree(new Vektor3D(1, 0, 0), speed);
 			if (speed.y < 0) angle = 360 - angle;
-			if (id == 0) System.out.println("angle = " + angle);
+			//if (id == 0) System.out.println("angle = " + angle);
 			
 		} catch (Exception e) {
 		}
@@ -49,16 +49,26 @@ public class Vogel extends BeweglichesObjekt {
 			//POGL.renderObjectWithForces((float)pos.x, (float)pos.y, 10, new Vektor2D(speed.x, speed.y), new Vektor2D(accel.x, accel.y));
 			
 			glBegin(GL_TRIANGLES);
-			/*
-			glVertex3f(px, py + 0.01f, pz);
-			glVertex3f(px, py - 0.01f, pz);
-			glVertex3f(px + 0.02f, py, pz);
-			*/
+			
+			//glVertex3f(px, py + 0.01f, pz);
+			//glVertex3f(px, py - 0.01f, pz);
+			//glVertex3f(px + 0.02f, py, pz);
+			
 			//angle = 90;
-			glVertex3f(px - (float)Math.sin(angle) * 0.01f, py + (float)Math.cos(angle) * 0.01f, pz);
-			glVertex3f(px - (float)Math.sin(angle) * (-0.01f), py + (float)Math.cos(angle) * (-0.01f), pz);
-			glVertex3f(px + (float)Math.cos(angle) * 0.02f, py + (float)Math.sin(angle) * 0.02f, pz);
+			//glVertex3f(px - (float)Math.sin(angle) * 0.01f, py + (float)Math.cos(angle) * 0.01f, pz);
+			//glVertex3f(px - (float)Math.sin(angle) * (-0.01f), py + (float)Math.cos(angle) * (-0.01f), pz);
+			//glVertex3f(px + (float)Math.cos(angle) * 0.02f, py + (float)Math.sin(angle) * 0.02f, pz);
 			//*/
+			
+			glVertex3f(px, py+4, pz);
+			glVertex3f(px, py-4, pz);
+			glVertex3f(px+10, py, pz);
+			
+			/*
+			glVertex3f(px - (float)Math.sin(angle) * 4, py + (float)Math.sin(angle) * 4, pz);
+			glVertex3f(px - (float)Math.sin(angle) * (-4), py + (float)Math.sin(angle) * (-4), pz);
+			glVertex3f(px + (float)Math.cos(angle) * 10, py + (float)Math.sin(angle) * 10f, pz);
+			*/
 			glEnd();
 			
 		}

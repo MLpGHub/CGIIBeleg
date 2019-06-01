@@ -83,21 +83,23 @@ public class Schwarmverhalten implements Verhalten {
 		Vektor3D ausrichtung = ausrichtung();
 		Vektor3D zusammenhalt = zusammenhalt();
 
-		double mx = Mouse.getX() / (double)Display.getDisplayMode().getWidth() * 2 - 1;
-		double my = Mouse.getY() / (double)Display.getDisplayMode().getHeight() * 2 - 1;
+		//double mx = Mouse.getX() / (double)Display.getDisplayMode().getWidth() * 2 - 1;
+		//double my = Mouse.getY() / (double)Display.getDisplayMode().getHeight() * 2 - 1;
+		double mx = Mouse.getX();
+		double my = Display.getDisplayMode().getHeight() - Mouse.getY();
 		Vektor3D mouse = new Vektor3D(mx, my, 0);
 		//System.out.println("mouse: " + mx + ", " + my);
 		
 		try {
 			mouse.sub(vogel.pos);
-			mouse.normalize();
+			//mouse.normalize();
 			mouse.mult(1); // 0.8
 			
 			if (followMouse) vogel.accel.add(mouse);
 			
 			seperation.mult(1.0); // 1.0
-			ausrichtung.mult(0.1); // 0.12
-			zusammenhalt.mult(0.1); // 0.01
+			ausrichtung.mult(0.12); // 0.12
+			zusammenhalt.mult(0.01); // 0.01
 			
 			vogel.accel.add(seperation);
 			vogel.accel.add(ausrichtung);

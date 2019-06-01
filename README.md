@@ -7,6 +7,12 @@ Hier wird die Fertigstellung unseres Beleges für das Modul Computergrafik II re
 * Wichtiger Punkt: Sobald zwei Objekte/Vögel übereinander sind (exakt, dist=0), ergibt der berechnete Seperations-Vektor (0, 0, 0), womit auch keine Seperation mehr stattfinden kann.
 * Lösung kann evtl. sein, alles auf Fensterbreite und -höhe umzubauen. Theoretisch sollte es aber auch mit dem OpenGL-Bereich funktionieren.
 
+* UPDATE: Code jetzt auf Lösung mit Displaygröße angepasst. Schwarmverhalten funktioniert irgendwie noch nicht. Ansonsten passt's aber erstmal.
+	* Code muss auf jeden Fall noch aufgeräumt werden! (zB überschüssige Variablen weg)
+	* evtl. update() gleich in BeweglichesObjekt programmieren
+	* Vorteil: größere Zahlen, leichter anpassbar (von den Zahlenwerten her)
+
+
 ## Aufgabenstellung
 
 Die Aufgabenstellung findet sich in der Datei "Belegaufgaben.pdf".
