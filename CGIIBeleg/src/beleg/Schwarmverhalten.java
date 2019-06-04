@@ -122,7 +122,7 @@ public class Schwarmverhalten implements Verhalten {
 			double length = vogel.speed.length();
 			
 			//max bzw. min speed evtl. hier
-			vogel.speed = LineareAlgebra.mult(LineareAlgebra.normalize(vogel.speed), max_speed); 
+			vogel.speed = LineareAlgebra.mult(LineareAlgebra.normalize(vogel.speed), max_speed);
 			
 			vogel.pos.add(vogel.speed);
 			

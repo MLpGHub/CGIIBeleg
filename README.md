@@ -4,6 +4,7 @@ Hier wird die Fertigstellung unseres Beleges für das Modul Computergrafik II re
 ## Notizen für die Umsetzung des Beleges
 * Wichtiger Punkt: Sobald zwei Objekte/Vögel übereinander sind (exakt, dist=0), ergibt der berechnete Seperations-Vektor (0, 0, 0), womit auch keine Seperation mehr stattfinden kann.
 * UPDATE: Problem scheinbar gefixt. Lösung im nächsten Absatz
+* TODO: Game Loop Speed (Vorlesung), Raubvogel Verhalten (Reaktion auf Tasten), OBJ-Loader??
 
 ## Lösung für DAS PROBLEM ;-)
 

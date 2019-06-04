@@ -38,24 +38,26 @@ public class Vogelsimulation extends LWJGLFenster {
 	private String vSource = LoadShader.load("shader/vogelsimulation.vs");
 	private String fSource = LoadShader.load("shader/vogelsimulation.fs");
 	private ThreadLocalRandom r = ThreadLocalRandom.current();
+	private Raubvogel grosserVogel;
 	
 	public Vogelsimulation() {
 		super("Vogelsimulation", 1200, 800);
 		schwarm = Vogelschwarm.getInstance();
-		Model vogelModel = null;
+		Model vogelModell = null;
 		try {
-			vogelModel = OBJLoader.loadModel(new File("obj/adler1.obj"));
+			vogelModell = OBJLoader.loadModel(new File("obj/adler1.obj"));
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+		grosserVogel = new Raubvogel(0, new Vektor3D(r.nextInt(WIDTH), r.nextInt(HEIGHT), 0), new Vektor3D(), null); //vogelModell
+		grosserVogel.verhalten = new Raubvogelverhalten(grosserVogel, schwarm, 0.1, 0.1);
 		for (int i = 0; i < 200; i++) {
 			//Vektor3D pos = new Vektor3D(0, 0, 0);
 			Vektor3D pos = new Vektor3D(r.nextInt(WIDTH), r.nextInt(HEIGHT), 0);
-			System.out.println(pos.x + ", " + pos.y);
+			//System.out.println(pos.x + ", " + pos.y);
 			Vektor3D speed = new Vektor3D(r.nextDouble(0.5), r.nextDouble(0.5), 0);
-			Vektor3D accel = new Vektor3D();
-			Vogel v = new Vogel(i, pos, speed, accel, schwarm, null); //null = vogelModel
-			v.verhalten = new Schwarmverhalten(v, 20, 0.05, 3, true);
+			Vogel v = new Vogel(i, pos, speed, schwarm, null);
+			v.verhalten = new Schwarmverhalten(v, 20, 0.05, 3, true); //v, 20, 0.05, 3, true
 			schwarm.add(v);
 		}
 		initDisplay();
@@ -100,6 +102,8 @@ public class Vogelsimulation extends LWJGLFenster {
 			schwarm.render();
 			if ((int)time%1 == 0)
 				schwarm.update();
+			grosserVogel.render();
+			grosserVogel.update();
 			Display.update();
 		}
 	}
