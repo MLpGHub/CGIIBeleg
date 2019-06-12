@@ -81,14 +81,12 @@ public class Raubvogelverhalten implements Verhalten {
 			if (v.gefressen) continue;
 			try {
 				double dist = LineareAlgebra.euklDistance(pos, v.pos);
-				//if (i == 0) System.out.println("dist=" + dist);
 				if (dist < 15) {
-				//if (pos == v.pos) {
 					v.setGefressen(true);
 					i--;
 					schwarmgroesse--;
 					raubvogel.mageninhalt++;
-					System.out.println("mageninhalt=" + raubvogel.mageninhalt);
+					//System.out.println("mageninhalt=" + raubvogel.mageninhalt);
 				}
 			} catch (Exception e) {
 			}
@@ -103,12 +101,13 @@ public class Raubvogelverhalten implements Verhalten {
 			tasten.mult(0.8);
 			accel.add(tasten);
 			
-			raubvogel.speed.add(LineareAlgebra.mult(accel, 0.005));
+			raubvogel.speed.add(LineareAlgebra.mult(accel, 0.0005));
 			double length = raubvogel.speed.length();
-			if (length != min_speed) LineareAlgebra.mult(LineareAlgebra.normalize(raubvogel.speed), min_speed);
+			if (length < min_speed) raubvogel.speed = LineareAlgebra.mult(LineareAlgebra.normalize(raubvogel.speed), min_speed);
+			else if (length > max_speed) raubvogel.speed = LineareAlgebra.mult(LineareAlgebra.normalize(raubvogel.speed), max_speed);
 			
 			raubvogel.pos.add(raubvogel.speed);
-			raubvogel.pos.add(accel); // raubvogel.speed
+			//raubvogel.pos.add(accel);
 			
 			//LineareAlgebra.show(raubvogel.pos);
 			

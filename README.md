@@ -1,6 +1,9 @@
 # CGIIBeleg
 Hier wird die Fertigstellung unseres Beleges für das Modul Computergrafik II realisiert.
 
+## Notizen für die Dokumentation
+* Die Vögel fliehen vor'm Raubvogel, was auch implementiert ist. Diese Fluchtkraft wird jedoch mit allen anderen Kräften aufaddiert. Da die Vögeln außerdem jederzeit zur Mausposition fliegen wollen, ist diese Fluchtkraft nicht so einfach sichtbar.
+
 ## Notizen für die Umsetzung des Beleges
 * Wichtiger Punkt: Sobald zwei Objekte/Vögel übereinander sind (exakt, dist=0), ergibt der berechnete Seperations-Vektor (0, 0, 0), womit auch keine Seperation mehr stattfinden kann.
 * UPDATE: Problem scheinbar gefixt. Lösung im nächsten Absatz

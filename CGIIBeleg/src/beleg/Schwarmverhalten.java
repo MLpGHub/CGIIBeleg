@@ -5,13 +5,14 @@ import org.lwjgl.opengl.Display;
 
 public class Schwarmverhalten implements Verhalten {
 	private Vogel vogel;
+	private Raubvogel raubvogel;
 	private double dist;
 	private double min_speed;
 	private double max_speed;
 	private boolean followMouse;
 	private Vektor3D accel;
 
-	public Schwarmverhalten(Vogel vogel, double dist, double min_speed, double max_speed, boolean followMouse) {
+	public Schwarmverhalten(Vogel vogel, Raubvogel raubvogel, double dist, double min_speed, double max_speed, boolean followMouse) {
 		this.vogel = vogel;
 		this.dist = dist;
 		this.min_speed = min_speed;
@@ -94,6 +95,24 @@ public class Schwarmverhalten implements Verhalten {
 		return mouse;
 	}
 	
+	public Vektor3D flieheVorRaubvogel() {
+		Vektor3D force = new Vektor3D();
+		int max = 15 * (int)dist;
+		try {
+			int dis = (int)LineareAlgebra.euklDistance(vogel.pos, raubvogel.pos);
+			if (dis < max) {
+				force.add(LineareAlgebra.sub(vogel.pos, raubvogel.pos));
+				force.normalize();
+				dis = -dis + max;
+				if (dis >= 20)  {
+					force.mult((double) dis / (double) max);
+				}
+			}
+		} catch (Exception e) {
+		}
+		return force;
+	}
+	
 	public void resetAcceleration() {
 		try {
 			accel.mult(0);
@@ -105,17 +124,20 @@ public class Schwarmverhalten implements Verhalten {
 		Vektor3D seperation = seperation();
 		Vektor3D ausrichtung = ausrichtung();
 		Vektor3D zusammenhalt = zusammenhalt();
+		Vektor3D raubvogel = flieheVorRaubvogel();
 		
 		try {
 			maus.mult(0.8); // 0.8
 			seperation.mult(1.0); // 1.0
 			ausrichtung.mult(0.12); // 0.12
 			zusammenhalt.mult(0.01); // 0.01
+			raubvogel.mult(1.0); //??
 			
 			if (followMouse) accel.add(maus);
 			accel.add(seperation);
 			accel.add(ausrichtung);
 			accel.add(zusammenhalt);
+			accel.add(raubvogel);
 			
 			vogel.speed.add(accel);
 			

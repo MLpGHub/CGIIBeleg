@@ -12,6 +12,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 public class Vogel extends BeweglichesObjekt {
 	public Vogelschwarm schwarm;
+	public Raubvogel raubvogel;
 	public Model model;
 	public boolean gefressen;
 	
@@ -65,6 +66,7 @@ public class Vogel extends BeweglichesObjekt {
 			glEnd();
 		} else {
 			//POGL.renderObjectWithForces((float)pos.x, (float)pos.y, 3, new Vektor2D(speed.x, speed.y), new Vektor2D());
+			
 			float size = 8;
 			glLoadIdentity();
 			glTranslated(pos.x, pos.y, 0);
