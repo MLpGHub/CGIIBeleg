@@ -1,0 +1,3 @@
+https://github.com/carlmrichter/swarming-behavior
+
+http://www.daniel-schwamm.de/index.php?pg=delphi-tutorials/opengl-swarm-intelligence
