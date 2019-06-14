@@ -5,6 +5,7 @@ import static org.lwjgl.opengl.GL11.GL_TRIANGLE_FAN;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
+import static org.lwjgl.opengl.GL11.glRotatef;
 import static org.lwjgl.opengl.GL11.glScaled;
 import static org.lwjgl.opengl.GL11.glTranslated;
 import static org.lwjgl.opengl.GL11.glVertex3f;
@@ -25,23 +26,33 @@ public class Raubvogel extends BeweglichesObjekt {
 	public void render() {
 		//POGL.renderObjectWithForces((float)pos.x, (float)pos.y, 5, new Vektor2D(speed.x, speed.y), new Vektor2D());
 
+		int angle = 0;
+		
+		try {
+			angle = (int)LineareAlgebra.angleDegree(new Vektor3D(1, 0, 0), speed);
+			if (speed.y < 0) angle = 360 - angle;
+			
+		} catch (Exception e) {
+		}
+		
 		if (model != null) {
 			int size = 5;
 			glLoadIdentity();
 			glTranslated(pos.x, pos.y, 0);
 			glScaled(size, size, size);
+			glRotatef((float)angle, 0, 0, 1.f);
 			
 			glBegin(GL_TRIANGLES);
 			for (int i = 0; i < model.faces.size(); i++) {
+				//System.out.println("v1[" + v1.x + ", " + v1.y + ", " + v1.z + "]");
+				//System.out.println("v2[" + v2.x + ", " + v2.y + ", " + v2.z + "]");
+				//System.out.println("v3[" + v3.x + ", " + v3.y + ", " + v3.z + "]");
 				Vector3f v1 = model.vertices.get(model.faces.get(i).verticeIndices.get(0)); //IndexOutOfBoundsException
 				Vector3f v2 = model.vertices.get(model.faces.get(i).verticeIndices.get(1));
 				Vector3f v3 = model.vertices.get(model.faces.get(i).verticeIndices.get(2));
 				glVertex3f(v1.x, v1.y, v1.z);
 				glVertex3f(v2.x, v2.y, v2.z);
 				glVertex3f(v3.x, v3.y, v3.z);
-				//System.out.println("v1[" + v1.x + ", " + v1.y + ", " + v1.z + "]");
-				//System.out.println("v2[" + v2.x + ", " + v2.y + ", " + v2.z + "]");
-				//System.out.println("v3[" + v3.x + ", " + v3.y + ", " + v3.z + "]");
 			}
 			glEnd();
 		} else {
@@ -50,15 +61,16 @@ public class Raubvogel extends BeweglichesObjekt {
 			glLoadIdentity();
 			glTranslated(pos.x, pos.y, 0);
 			glScaled(size, size, size);
+			glRotatef((float)angle, 0, 0, 1.f);
 			
 			glBegin(GL_TRIANGLE_FAN);
 			float angleIncrement = 360.0f / 5;  // n is 5 in your case
 			angleIncrement *= Math.PI / 180.0f;    // convert degrees to radians
-			float angle = 0.0f;
+			float ang = 0.0f;
 			float radius = 1.f;
 			for (int k = 0; k < 5; ++k) {
-				glVertex3f((float)(radius * Math.cos(angle)), (float)(radius * Math.sin(angle)), 0);
-			    angle += angleIncrement;
+				glVertex3f((float)(radius * Math.cos(ang)), (float)(radius * Math.sin(ang)), 0);
+			    ang += angleIncrement;
 			}
 			glEnd();
 		}

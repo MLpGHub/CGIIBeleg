@@ -6,6 +6,7 @@ import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glVertex3f;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glScaled;
+import static org.lwjgl.opengl.GL11.glRotatef;
 import static org.lwjgl.opengl.GL11.glTranslated;
 
 import org.lwjgl.util.vector.Vector3f;
@@ -71,6 +72,7 @@ public class Vogel extends BeweglichesObjekt {
 			glLoadIdentity();
 			glTranslated(pos.x, pos.y, 0);
 			glScaled(size, size, size);
+			glRotatef((float)angle, 0, 0, 1.f);
 			
 			glBegin(GL_TRIANGLES);
 			

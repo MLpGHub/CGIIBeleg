@@ -103,10 +103,12 @@ public class Schwarmverhalten implements Verhalten {
 			if (dis < max) {
 				force.add(LineareAlgebra.sub(vogel.pos, raubvogel.pos));
 				force.normalize();
+				/*
 				dis = -dis + max;
 				if (dis >= 20)  {
 					force.mult((double) dis / (double) max);
 				}
+				*/
 			}
 		} catch (Exception e) {
 		}
@@ -131,7 +133,7 @@ public class Schwarmverhalten implements Verhalten {
 			seperation.mult(1.0); // 1.0
 			ausrichtung.mult(0.12); // 0.12
 			zusammenhalt.mult(0.01); // 0.01
-			raubvogel.mult(1.0); //??
+			raubvogel.mult(10.0); //??
 			
 			if (followMouse) accel.add(maus);
 			accel.add(seperation);

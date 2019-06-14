@@ -1,0 +1,395 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Farben fuer Programmlisting
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{listings,xcolor}
+
+\definecolor{foreground}{HTML}{D8D8D8}
+\definecolor{background}{HTML}{2F2F2F}
+\definecolor{selectionForeground}{HTML}{D0D0D0}
+\definecolor{selectionBackground}{HTML}{000000}
+\definecolor{currentLine}{HTML}{2A2A2A}
+\definecolor{lineNumber}{HTML}{D0D0D0}
+\definecolor{searchResultIndication}{HTML}{000000}
+\definecolor{filteredSearchResultIndication}{HTML}{000000}
+\definecolor{occurrenceIndication}{HTML}{000000}
+\definecolor{writeOccurrenceIndication}{HTML}{000000}
+\definecolor{findScope}{HTML}{111111}
+\definecolor{sourceHoverBackground}{HTML}{000000}
+\definecolor{singleLineComment}{HTML}{6D6D6D}
+\definecolor{multiLineComment}{HTML}{6D6D6D}
+\definecolor{commentTaskTag}{HTML}{6D6D6D}
+\definecolor{javadoc}{HTML}{808080}
+\definecolor{javadocLink}{HTML}{a0a0a0}
+\definecolor{javadocTag}{HTML}{a0a0a0}
+\definecolor{javadocKeyword}{HTML}{a0a0a0}
+\definecolor{class}{HTML}{2672c3}
+\definecolor{interface}{HTML}{BA31FF}
+\definecolor{method}{HTML}{2ba141}
+\definecolor{methodDeclaration}{HTML}{777777}
+\definecolor{bracket}{HTML}{e6e6fa}
+\definecolor{number}{HTML}{4d87bb}
+\definecolor{string}{HTML}{17c6a3}
+\definecolor{operator}{HTML}{e6e6fa}
+\definecolor{keyword}{HTML}{9c4530}
+\definecolor{annotation}{HTML}{FFFFFF}
+\definecolor{staticMethod}{HTML}{777777}
+\definecolor{localVariable}{HTML}{79ABFF}
+\definecolor{localVariableDeclaration}{HTML}{BED6FF}
+\definecolor{field}{HTML}{777777}
+\definecolor{staticField}{HTML}{777777}
+\definecolor{staticFinalField}{HTML}{777777}
+\definecolor{deprecatedMember}{HTML}{777777}
+\definecolor{deletionIndication}{HTML}{777777}
+\definecolor{enum}{HTML}{777777}
+\definecolor{inheritedMethod}{HTML}{777777}
+\definecolor{abstractMethod}{HTML}{777777}
+\definecolor{parameterVariable}{HTML}{777777}
+\definecolor{typeArgument}{HTML}{777777}
+\definecolor{typeParameter}{HTML} {777777}
+\definecolor{constant}{HTML}{b77730}
+
+%%777777 --> filler
+
+
+% Vordefiniertes Programmlisting
+\lstset{
+language = Java,
+basicstyle = \small\sffamily,
+backgroundcolor = \color{background},
+stringstyle = \color{string},
+keywordstyle = \color{keyword}\bfseries,
+commentstyle = \color{singleLineComment}\itshape,
+frame = lrbt,
+frameround =tttt,
+numbers = left,
+numberstyle = \color{number},
+showstringspaces = false,
+breaklines = true,
+xleftmargin = 15pt,
+emph = [1]{Java},
+emphstyle = [1]\color{black},
+emph = [2]{if,and,or,else},
+emphstyle = [2]\color{interface},
+emph = [3]{Exception},
+emphstyle = [3]\color{localVariable},
+emph = [4]{expected},
+emphstyle = [4]\color{localVariable},
+emph = [5]{@Test,@param,@author},
+emphstyle = [5]\color{javadocLink},
+emph = [6]{out,MIN_VALUE,MAX_VALUE,MIN,MAX},
+emphstyle = [6]\color{localVariableDeclaration}
+}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language ngerman
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1.5cm
+\topmargin 1.5cm
+\rightmargin 1.5cm
+\bottommargin 1.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip smallskip
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style german
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Belegarbeit Teil II
+\begin_inset Newline newline
+\end_inset
+
+zur Veranstaltung Computergrafik und Visualisierung II
+\end_layout
+
+\begin_layout Author
+Günther, Emanuel s76954 - Leopold, Michael s76904 - Fleischer, Kassandra
+ s77282
+\end_layout
+
+\begin_layout Date
+SoSe 2019
+\end_layout
+
+\begin_layout Section
+Aufgabenstellung
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Integration von Schwarmverhalten [20 Punkte]
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+Integrieren Sie die notwendigen Methoden für die Realisierung eines Schwarmverha
+ltens.
+ Achten Sie dabei auf ein sinnvolles Konzept.
+ Überlegen Sie sich ein geeignetes Projekt, in dem Sie Schwarmverhalten
+ einsetzen wollen.
+ Achten Sie auf die individuellen Bewegungs- und Handlungsmöglichkeiten
+ und adaptieren Sie Ihre Implementierung des Schwarmverhaltens auf das Projekt.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Shader-Visualisierung [10 Punkte]
+\series default
+
+\begin_inset Newline newline
+\end_inset
+
+Visualisieren Sie einen Schwarm im FragmentShader.
+ Dazu könnten Sie beispielsweise die Individuen durch einfache OpenGL-Primitive
+ konstruieren.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Shader-Berechnunge[20 Zusatzpunkte und jede Menge Ruhm und Ehre]
+\series default
+ 
+\begin_inset Newline newline
+\end_inset
+
+Als Herausforderung können Sie versuchen, den Code aus der vorhergehenden
+ Aufgabe so anzupassen, dass die update-Methode (die Aktualisierung aller
+ notwendigen Kräfte und damit auch der einzelnen Positionen) durch einen
+ VertexShader realisiert werden.
+ Wer das vorstellen kann, wird in die CG-II-Hall-of-Fame aufgenommen.
+\end_layout
+
+\begin_layout Section
+Lösung
+\end_layout
+
+\begin_layout Standard
+Die vollständigen Lösungen wurden per Email abgegeben.
+ Hier ein Auszug der relevanten Abschnitte zu den Klassen.
+\end_layout
+
+\begin_layout Standard
+Die Lösung wurde in 
+\family typewriter
+Eclipse 2019-03
+\family default
+ unter Zuhilfenahme von 
+\family typewriter
+JUnit 5
+\family default
+ entwickelt und getestet.
+\end_layout
+
+\begin_layout Subsection
+Klasse Vogelsimulation
+\end_layout
+
+\begin_layout Standard
+Diese Klasse bildet den Kern unseres Programmes.
+ In ihr werden die entsprechenden 3D-Modelle und deren Verhalten zusammen
+ gebracht und zur eigentlichen Ausführung genutzt.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Die daraufhin entwickelte Implentierung sieht wiefolgt aus:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Klassen Vogel&Raubvogel - Schwarmverhalten&Raubvogelverhalten 
+\end_layout
+
+\begin_layout Standard
+Fische verhalten sich anders als Autos.
+ Autos wiederum anders als Raumschiffe und Raumschiffe anders als Vögel.
+ Daher müssen wir unseren Elementen, den Vögeln im Vogelschwarm und dem
+ Raubvogel ein eigenes Verhalten und Aussehen geben.
+ Dies geschieht hier.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Shader
+\end_layout
+
+\begin_layout Subsection
+Klassen OBJLoader & Face
+\end_layout
+
+\begin_layout Subsubsection
+Warum 3D Modelle
+\end_layout
+
+\begin_layout Standard
+2D Modelle sind nett.
+ 3D Modelle sind natürlich besser.
+ Da .obj Dateien ein vereinheitlichtes Format haben, lassen sich diese einfach
+ auslesen.
+ Im folgenden sehen sie ein Beispiel unseres Modells vom Raubvogel in Form
+ eines Screenshot vom Dateicode.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename D:/img/ScreenshotAdler.PNG
+	lyxscale 25
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Klasse Face
+\end_layout
+
+\begin_layout Standard
+Die Klasse Face ist repräsentativ dafür wie wir mit der .obj Datei umgehen.
+ Zunächst extrahieren wir die einzelenen Informationen pro Spalte der Dateien.
+ Diese Werden
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "block 2019"
+literal "true"
+
+\end_inset
+
+Block-Berlitz M.: 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+Warum sich der Dino furchtbar erschreckte - Lehrbuch zu Beleuchtung und
+ Rendering mit Java, LWJGL, OpenGL und GLSL
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+, vividus Wissenschaftsverlag, 2019 (to appear :) )
+\end_layout
+
+\end_body
+\end_document

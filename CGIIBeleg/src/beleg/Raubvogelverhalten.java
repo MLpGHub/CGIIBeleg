@@ -86,7 +86,7 @@ public class Raubvogelverhalten implements Verhalten {
 					i--;
 					schwarmgroesse--;
 					raubvogel.mageninhalt++;
-					//System.out.println("mageninhalt=" + raubvogel.mageninhalt);
+					System.out.println("mageninhalt=" + raubvogel.mageninhalt);
 				}
 			} catch (Exception e) {
 			}
