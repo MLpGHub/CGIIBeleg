@@ -30,6 +30,7 @@ public class Vogel extends BeweglichesObjekt {
 	
 	@Override
 	public void update() {
+		if (gefressen) return;
 		if (verhalten != null) {
 			if (!gefressen) verhalten.update();
 		}

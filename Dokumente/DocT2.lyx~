@@ -240,7 +240,7 @@ Lösung
 
 \begin_layout Standard
 Die vollständigen Lösungen wurden per Email abgegeben.
- Hier ein Auszug der relevanten Abschnitte zu den Klassen.
+ Hier ein Auszug der verwendeten Konzepte und Shader.
 \end_layout
 
 \begin_layout Standard
@@ -248,15 +248,82 @@ Die Lösung wurde in
 \family typewriter
 Eclipse 2019-03
 \family default
- unter Zuhilfenahme von 
-\family typewriter
-JUnit 5
-\family default
- entwickelt und getestet.
+ entwickelt.
 \end_layout
 
 \begin_layout Subsection
-Klasse Vogelsimulation
+Idee/Konzept
+\end_layout
+
+\begin_layout Standard
+Unsere Idee eine Vogelsimulation mit Spielcharakter.
+ Es werden ein Schwarm von Vögeln sowie ein Raubvogel simuliert.
+ 
+\end_layout
+
+\begin_layout Standard
+Die Steuerung des Raubvogels erfolgt über die Tastatur ({W, A, S, D} oder
+ Pfeiltasten).
+ Der Vogelschwarm wird mit der Maus gesteuert.
+\end_layout
+
+\begin_layout Subsubsection
+Vogelschwarm
+\end_layout
+
+\begin_layout Standard
+Auf jeden einzelnen Vogel des Schwarms wirken drei Kräfte, die das Schwarmverhal
+ten simulieren.
+ Diese sind Seperation, Angleichung und Zusammenhalt.
+ Seperation bewirkt, dass jeder Vogel seinen eigenen Freiraum besitzt.
+ Durch die Angleichung bewegen sich alle Vögel in eine grundsätzlich ähnliche
+ Richtung.
+ Der Zusammenhalt sorgt dafür, dass die Vögel im Schwarm bleiben.
+\end_layout
+
+\begin_layout Standard
+Zusätzlich zu den Kräften des Schwarmverhaltens werden die Vögel noch anderweiti
+g beeinflusst.
+ Zum einen bewegen sich die Vögel immer zur aktuellen Mausposition hin.
+ Damit lässt sich der Schwarm steuern.
+ Zum anderen fliehen die Vögel vor dem Raubvogel.
+ Dieser stellt einen Fressfeind dar.
+ 
+\end_layout
+
+\begin_layout Standard
+Um einen natürlichen Bewegungsfluss zu simulieren, müssen alle einwirkenden
+ Kräfte gewichtet werden.
+ Die Seperationskraft ist wesentlich stärker als die der Angleichung oder
+ die des Zusammenhalts.
+ Die Kräfte der Maus und des Raubvogels besitzen etwa die selbe Gewichtung
+ wie die des Zusammenhaltes.
+ Die Vögel bewegen sich immer mit maximaler Geschwindigkeit.
+\end_layout
+
+\begin_layout Standard
+Die Visualiserung der Vögel erfolgt über Dreiecke.
+ Sie werden entsprechend ihrer jeweiligen Bewegungsrichtung rotiert.
+\end_layout
+
+\begin_layout Subsubsection
+Raubvogel
+\end_layout
+
+\begin_layout Standard
+Auf dem Raubvogel wirken die Kräfte der Steuerungstasten.
+ Außerdem bewegt sich der Raubvogel immer mindestens mit Minimal-, höchstens
+ aber mit Maximalgeschwindigkeit.
+\end_layout
+
+\begin_layout Standard
+Die Visualisierung des Raubvogels erfolgt als Pentagon.
+ Dieses wird, genau wie bei der Darstellung der Vögel, entsprechend der
+ Bewegungsrichtung rotiert.
+\end_layout
+
+\begin_layout Subsection
+Details zur Implementierung
 \end_layout
 
 \begin_layout Standard
@@ -280,8 +347,34 @@ status open
 
 \end_layout
 
+\begin_layout Subsubsection
+Klasse 
+\family typewriter
+Vogelsimulation
+\end_layout
+
 \begin_layout Standard
-Die daraufhin entwickelte Implentierung sieht wiefolgt aus:
+Die Klasse 
+\family typewriter
+Vogelsimulation
+\family default
+ stellt den Einstiegspunkt in das Projekt dar.
+ In ihr werden das LWJGL-Fenster initialisiert, die Shader geladen, kompiliert
+ und verlinkt, der Vogelschwarm und der Raubvogel angelegt sowie der Renderloop
+ samt Transformationen ausgeführt.
+\end_layout
+
+\begin_layout Subsubsection
+Klasse 
+\family typewriter
+Vogelschwarm
+\end_layout
+
+\begin_layout Standard
+In der Vogelschwarm-Klasse werden alle Vögel eines Schwarmes verwaltet.
+ Sie ist mithilfe des Singleton-Patterns implementiert, d.h.
+ es gibt nur eine Instanz dieser Klasse.
+ Folgende Methoden implementieren das Pattern:
 \end_layout
 
 \begin_layout Standard
@@ -292,6 +385,47 @@ status open
 
 \begin_layout Plain Layout
 
+private Vogelschwarm() {
+\end_layout
+
+\begin_layout Plain Layout
+
+	schwarm = new ArrayList<Vogel>();
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+public static Vogelschwarm getInstance() {
+\end_layout
+
+\begin_layout Plain Layout
+
+	return exemplar;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+public Object clone() throws CloneNotSupportedException {
+\end_layout
+
+\begin_layout Plain Layout
+
+	throw new CloneNotSupportedException("Es gibt nur EINEN Schwarm.");
+\end_layout
+
+\begin_layout Plain Layout
+
+}
 \end_layout
 
 \end_inset
@@ -299,16 +433,83 @@ status open
 
 \end_layout
 
-\begin_layout Subsection
-Klassen Vogel&Raubvogel - Schwarmverhalten&Raubvogelverhalten 
+\begin_layout Standard
+Zur Verwaltung der Vögel existieren die Methoden 
+\family typewriter
+update()
+\family default
+ und 
+\family typewriter
+render()
+\family default
+.
+ Sie leiten den jeweiligen Befehl an alle Vögel des Schwarms weiter.
+\end_layout
+
+\begin_layout Subsubsection
+Klasse 
+\family typewriter
+Vogel
 \end_layout
 
 \begin_layout Standard
-Fische verhalten sich anders als Autos.
- Autos wiederum anders als Raumschiffe und Raumschiffe anders als Vögel.
- Daher müssen wir unseren Elementen, den Vögeln im Vogelschwarm und dem
- Raubvogel ein eigenes Verhalten und Aussehen geben.
- Dies geschieht hier.
+Jeder Vogel erbt von der Klasse BeweglichesObjekt.
+ Unter anderem besitzt er eine boolsche Membervariable 
+\family typewriter
+gefressen
+\family default
+, die auf 
+\family typewriter
+true
+\family default
+ gesetzt wird, wenn der Vogel vom Raubvogel gefressen wurde.
+ Außerdem sind die Methoden 
+\family typewriter
+update()
+\family default
+ und 
+\family typewriter
+render()
+\family default
+ implementiert, die jeweils nur ausgeführt werden, wenn der Vogel noch nicht
+ gefressen wurde.
+ Die Methode 
+\family typewriter
+update()
+\family default
+ leitet den Update-Befehl in diesem Fall an das entsprechende Schwarmverhalten
+ weiter.
+\end_layout
+
+\begin_layout Subsubsection
+Klasse 
+\family typewriter
+Schwarmverhalten
+\end_layout
+
+\begin_layout Standard
+Im Schwarmverhalten werden alle Kräfte berechnet, die zur Berechnung der
+ nächsten Position notwendig sind.
+ Dazu gehören zum einen Methoden für das Schwarmverhalten (
+\family typewriter
+seperation()
+\family default
+, 
+\family typewriter
+angleichung()
+\family default
+, 
+\family typewriter
+zusammenhalt()
+\family default
+).
+ Zum anderen sind das Methoden zur Mausverfolgung und zur Flucht vor dem
+ Raubvogel.
+\end_layout
+
+\begin_layout Standard
+Bei der Kraft zur Flucht vor dem Raubvogel wird der Vektor zwischen Raubvogel
+ und Vogel berechnet und normiert.
 \end_layout
 
 \begin_layout Standard
@@ -319,38 +520,197 @@ status open
 
 \begin_layout Plain Layout
 
+public Vektor3D flieheVorRaubvogel() {
+\end_layout
+
+\begin_layout Plain Layout
+
+	Vektor3D force = new Vektor3D();
+\end_layout
+
+\begin_layout Plain Layout
+
+	int max = 15 * (int)dist;
+\end_layout
+
+\begin_layout Plain Layout
+
+	try {
+\end_layout
+
+\begin_layout Plain Layout
+
+		int dis = (int)LineareAlgebra.euklDistance(vogel.pos, raubvogel.pos);
+\end_layout
+
+\begin_layout Plain Layout
+
+		if (dis < max) {
+\end_layout
+
+\begin_layout Plain Layout
+
+			force.add(LineareAlgebra.sub(vogel.pos, raubvogel.pos));
+\end_layout
+
+\begin_layout Plain Layout
+
+			force.normalize();
+\end_layout
+
+\begin_layout Plain Layout
+
+		}
+\end_layout
+
+\begin_layout Plain Layout
+
+	} catch (Exception e) {
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+	return force;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
 \end_layout
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+In der Methode 
+\family typewriter
+update()
+\family default
+ werden alle diese Kräfte übernommen, gewichtet und auf die Geschwindigkeit
+ und Position des Vogels angewendet.
+\end_layout
+
+\begin_layout Subsubsection
+Klasse 
+\family typewriter
+Raubvogel
 \end_layout
 
 \begin_layout Subsection
 Shader
 \end_layout
 
-\begin_layout Subsection
-Klassen OBJLoader & Face
-\end_layout
-
 \begin_layout Subsubsection
-Warum 3D Modelle
+Klasse 
+\family typewriter
+LoadShader
 \end_layout
 
 \begin_layout Standard
-2D Modelle sind nett.
- 3D Modelle sind natürlich besser.
- Da .obj Dateien ein vereinheitlichtes Format haben, lassen sich diese einfach
- auslesen.
- Im folgenden sehen sie ein Beispiel unseres Modells vom Raubvogel in Form
- eines Screenshot vom Dateicode.
+Die Klasse LoadShader besitzt einen privaten Konstruktor und stellt eine
+ statische Klasse zur Verfügung, die den Shadercode aus einer Datei liest
+ und diesen als String bereitstellt.
+\begin_inset listings
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+public static String load(String src) {
 \end_layout
 
-\begin_layout Standard
-\begin_inset Graphics
-	filename D:/img/ScreenshotAdler.PNG
-	lyxscale 25
+\begin_layout Plain Layout
+
+	File f = new File(src);
+\end_layout
+
+\begin_layout Plain Layout
+
+	FileInputStream fis;
+\end_layout
+
+\begin_layout Plain Layout
+
+	ByteArrayOutputStream bas = new ByteArrayOutputStream();
+\end_layout
+
+\begin_layout Plain Layout
+
+	int len; //number of read bytes
+\end_layout
+
+\begin_layout Plain Layout
+
+	byte[] buf = new byte[1024];
+\end_layout
+
+\begin_layout Plain Layout
+
+	try {
+\end_layout
+
+\begin_layout Plain Layout
+
+		fis = new FileInputStream(f);
+\end_layout
+
+\begin_layout Plain Layout
+
+		while ((len = fis.read(buf)) > -1) {
+\end_layout
+
+\begin_layout Plain Layout
+
+			bas.write(buf, 0, len);
+\end_layout
+
+\begin_layout Plain Layout
+
+		}
+\end_layout
+
+\begin_layout Plain Layout
+
+	} catch (Exception e) {
+\end_layout
+
+\begin_layout Plain Layout
+
+		System.out.println(e);
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+	String code = new String(bas.toByteArray());
+\end_layout
+
+\begin_layout Plain Layout
+
+	System.out.println(code);
+\end_layout
+
+\begin_layout Plain Layout
+
+	return code;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
 
 \end_inset
 
@@ -358,13 +718,112 @@ Warum 3D Modelle
 \end_layout
 
 \begin_layout Subsubsection
-Klasse Face
+
+\family typewriter
+Vertexshader
 \end_layout
 
 \begin_layout Standard
-Die Klasse Face ist repräsentativ dafür wie wir mit der .obj Datei umgehen.
- Zunächst extrahieren wir die einzelenen Informationen pro Spalte der Dateien.
- Diese Werden
+Im Vertexshader wird mithilfe der ModelViewProjectionMatrix der jeweilige
+ Vertex an seine Zielposition verschoben.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+void main() {
+\end_layout
+
+\begin_layout Plain Layout
+
+	gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Dabei wird eine orthografische Projektion angewendet, sodass mit ganzzahligen
+ Pixelwerten in der Größe der Fenstermaße gearbeitet werden kann.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+glMatrixMode(GL_PROJECTION);
+\end_layout
+
+\begin_layout Plain Layout
+
+glLoadIdentity();
+\end_layout
+
+\begin_layout Plain Layout
+
+glOrtho(0, WIDTH, HEIGHT, 0, 0, 1);
+\end_layout
+
+\begin_layout Plain Layout
+
+glMatrixMode(GL_MODELVIEW);
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+
+\family typewriter
+Fragmentshader
+\end_layout
+
+\begin_layout Standard
+Der Fragmentshader zeichnet alle betroffenen Pixel schwarz.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+void main() {
+\end_layout
+
+\begin_layout Plain Layout
+
+	gl_FragColor = vec4(0, 0, 0, 1.0);
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Bibliography
