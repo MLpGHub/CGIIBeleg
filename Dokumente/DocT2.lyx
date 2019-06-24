@@ -43,7 +43,7 @@
 \definecolor{annotation}{HTML}{FFFFFF}
 \definecolor{staticMethod}{HTML}{777777}
 \definecolor{localVariable}{HTML}{79ABFF}
-\definecolor{localVariableDeclaration}{HTML}{BED6FF}
+\definecolor{localVariableDeclaration}{HTML}{8fa1bf} %BED6FF
 \definecolor{field}{HTML}{777777}
 \definecolor{staticField}{HTML}{777777}
 \definecolor{staticFinalField}{HTML}{777777}
@@ -69,7 +69,7 @@ stringstyle = \color{string},
 keywordstyle = \color{keyword}\bfseries,
 commentstyle = \color{singleLineComment}\itshape,
 frame = lrbt,
-frameround =tttt,
+%frameround =tttt,
 numbers = left,
 numberstyle = \color{number},
 showstringspaces = false,
@@ -221,7 +221,7 @@ Visualisieren Sie einen Schwarm im FragmentShader.
 \begin_layout Enumerate
 
 \series bold
-Shader-Berechnunge[20 Zusatzpunkte und jede Menge Ruhm und Ehre]
+Shader-Berechnungen[20 Zusatzpunkte und jede Menge Ruhm und Ehre]
 \series default
  
 \begin_inset Newline newline
@@ -317,7 +317,7 @@ Auf dem Raubvogel wirken die Kräfte der Steuerungstasten.
 \end_layout
 
 \begin_layout Standard
-Die Visualisierung des Raubvogels erfolgt als Pentagon.
+Die Visualisierung des Raubvogels erfolgt als geladenes 3D-Modell.
  Dieses wird, genau wie bei der Darstellung der Vögel, entsprechend der
  Bewegungsrichtung rotiert.
 \end_layout
@@ -327,24 +327,8 @@ Details zur Implementierung
 \end_layout
 
 \begin_layout Standard
-Diese Klasse bildet den Kern unseres Programmes.
- In ihr werden die entsprechenden 3D-Modelle und deren Verhalten zusammen
- gebracht und zur eigentlichen Ausführung genutzt.
-\end_layout
-
-\begin_layout Standard
-\begin_inset listings
-lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
-inline false
-status open
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
+Nachfolgend werden wesentliche Auszüge aus den wichtigsten Klassen des Projektes
+ vorgestellt.
 \end_layout
 
 \begin_layout Subsubsection
@@ -604,7 +588,265 @@ Raubvogel
 \end_layout
 
 \begin_layout Standard
-asdjasldjh
+Beispielhaft für die Steuerung mit der Tastatur soll hier ein Ausschnitt
+ aus der Methode 
+\family typewriter
+tastatursteuerung()
+\family default
+ gezeigt werden.
+ Dabei wird überprüft, ob bestimmte Tasten ({W, A, S, D} oder Pfeiltasten)
+ gedrückt sind.
+ Entsprechend der gedrückten Tasten werden dann geeignete Richtungsvektoren
+ auf die Steuerungskraft addiert.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+if (Keyboard.isKeyDown(Keyboard.KEY_LEFT) || Keyboard.isKeyDown(Keyboard.KEY_A))
+ {
+\end_layout
+
+\begin_layout Plain Layout
+
+	try {
+\end_layout
+
+\begin_layout Plain Layout
+
+		Vektor3D sp = raubvogel.speed;
+\end_layout
+
+\begin_layout Plain Layout
+
+		double a = - Math.PI / 2;
+\end_layout
+
+\begin_layout Plain Layout
+
+		double x = sp.x * Math.cos(a) - sp.y * Math.sin(a);
+\end_layout
+
+\begin_layout Plain Layout
+
+		double y = sp.x * Math.sin(a) + sp.y * Math.cos(a);
+\end_layout
+
+\begin_layout Plain Layout
+
+		force.add(new Vektor3D(x, y, 0));
+\end_layout
+
+\begin_layout Plain Layout
+
+	} catch (Exception e) {
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Bei jedem Update des Raubvogels wird auch überprüft, ob der Raubvogel andere
+ Vögel in Reichweite frisst.
+ Dabei wird für alle Vögel aus dem Schwarm die Distanz zum Raubvogel berechnet.
+ Ist diese kleiner als 10, gelten sie als vom Raubvogel gefressen und werden
+ in den kommenden Berechnungen nicht mehr berücksichtigt.
+ Gleichzeitig wird pro gefressenem Vogel die Variable 
+\family typewriter
+mageninhalt
+\family default
+ des Raubvogels inkrementiert.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+public void frissDenVogel() {
+\end_layout
+
+\begin_layout Plain Layout
+
+	Vektor3D pos = raubvogel.pos;
+\end_layout
+
+\begin_layout Plain Layout
+
+	int schwarmgroesse = schwarm.getSchwarmgroesse();
+\end_layout
+
+\begin_layout Plain Layout
+
+	for (int i = 0; i < schwarmgroesse; i++) {
+\end_layout
+
+\begin_layout Plain Layout
+
+		Vogel v = schwarm.getVogel(i);
+\end_layout
+
+\begin_layout Plain Layout
+
+		if (v.gefressen) continue;
+\end_layout
+
+\begin_layout Plain Layout
+
+		try {
+\end_layout
+
+\begin_layout Plain Layout
+
+			double dist = LineareAlgebra.euklDistance(pos, v.pos);
+\end_layout
+
+\begin_layout Plain Layout
+
+			if (dist < 10) {
+\end_layout
+
+\begin_layout Plain Layout
+
+				v.setGefressen(true);
+\end_layout
+
+\begin_layout Plain Layout
+
+				i--;
+\end_layout
+
+\begin_layout Plain Layout
+
+				schwarmgroesse--;
+\end_layout
+
+\begin_layout Plain Layout
+
+				raubvogel.mageninhalt++;
+\end_layout
+
+\begin_layout Plain Layout
+
+			}
+\end_layout
+
+\begin_layout Plain Layout
+
+		} catch (Exception e) {
+\end_layout
+
+\begin_layout Plain Layout
+
+		}
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Klasse 
+\family typewriter
+OBJLoader
+\end_layout
+
+\begin_layout Standard
+Diese Klasse sorgt für das Laden und Bereitstellen eines 3D-Modells aus
+ einer OBJ-Datei.
+ Zur Visualisierung wird bei der Instanziierung ein Objekt der Klasse 
+\family typewriter
+Model
+\family default
+ an den Raubvogel übergeben.
+ Dieses wird in der Funktion 
+\family typewriter
+render()
+\family default
+ ausgelesen und in OpenGL-Primitive überführt.
+\end_layout
+
+\begin_layout Standard
+Der 
+\family typewriter
+OBJLoader
+\family default
+ stellt eine statische Methode zum Laden von OBJ-Dateien zur Verfügung.
+ Dabei liest er die Datei und parst nach den Symbolen für Vertices, Normalen-Ver
+tices und Faces.
+ Nachfolgend wird exemplarisch das Auslesen der Daten für einen Vertex gezeigt.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Java,numbers=left,basicstyle={\scriptsize\ttfamily},tabsize=4,backgroundcolor={\color[rgb]{0.8588,1,0.7333}},frame=single,xleftmargin=15pt"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+if (line.startsWith("v ")) {
+\end_layout
+
+\begin_layout Plain Layout
+
+	float x = Float.valueOf(line.split(" ")[1]);
+\end_layout
+
+\begin_layout Plain Layout
+
+	float y = Float.valueOf(line.split(" ")[2]);
+\end_layout
+
+\begin_layout Plain Layout
+
+	float z = Float.valueOf(line.split(" ")[3]);
+\end_layout
+
+\begin_layout Plain Layout
+
+	m.vertices.add(new Vector3f(x, y, z));
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection

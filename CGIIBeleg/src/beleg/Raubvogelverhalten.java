@@ -36,25 +36,33 @@ public class Raubvogelverhalten implements Verhalten {
 		
 		if (Keyboard.isKeyDown(Keyboard.KEY_UP) || Keyboard.isKeyDown(Keyboard.KEY_W)) {
 			try {
-				force.add(new Vektor3D(0, -1, 0));
+				force.add(LineareAlgebra.normalize(raubvogel.speed));
 			} catch (Exception e) {
 			}
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN) || Keyboard.isKeyDown(Keyboard.KEY_S)) {
 			try {
-				force.add(new Vektor3D(0, 1, 0));
+				force.add(LineareAlgebra.normalize(LineareAlgebra.negate(raubvogel.speed)));
 			} catch (Exception e) {
 			}
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT) || Keyboard.isKeyDown(Keyboard.KEY_A)) {
 			try {
-				force.add(new Vektor3D(-1, 0, 0));
+				Vektor3D sp = raubvogel.speed;
+				double a = - Math.PI / 2;
+				double x = sp.x * Math.cos(a) - sp.y * Math.sin(a);
+				double y = sp.x * Math.sin(a) + sp.y * Math.cos(a);
+				force.add(new Vektor3D(x, y, 0));
 			} catch (Exception e) {
 			}
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT) || Keyboard.isKeyDown(Keyboard.KEY_D)) {
 			try {
-				force.add(new Vektor3D(1, 0, 0));
+				Vektor3D sp = raubvogel.speed;
+				double a = + Math.PI / 2;
+				double x = sp.x * Math.cos(a) - sp.y * Math.sin(a);
+				double y = sp.x * Math.sin(a) + sp.y * Math.cos(a);
+				force.add(new Vektor3D(x, y, 0));
 			} catch (Exception e) {
 			}
 		}
@@ -81,12 +89,11 @@ public class Raubvogelverhalten implements Verhalten {
 			if (v.gefressen) continue;
 			try {
 				double dist = LineareAlgebra.euklDistance(pos, v.pos);
-				if (dist < 15) {
+				if (dist < 10) {
 					v.setGefressen(true);
 					i--;
 					schwarmgroesse--;
 					raubvogel.mageninhalt++;
-					System.out.println("mageninhalt=" + raubvogel.mageninhalt);
 				}
 			} catch (Exception e) {
 			}
@@ -107,10 +114,6 @@ public class Raubvogelverhalten implements Verhalten {
 			else if (length > max_speed) raubvogel.speed = LineareAlgebra.mult(LineareAlgebra.normalize(raubvogel.speed), max_speed);
 			
 			raubvogel.pos.add(raubvogel.speed);
-			//raubvogel.pos.add(accel);
-			
-			//LineareAlgebra.show(raubvogel.pos);
-			
 			resetAcceleration();
 		} catch (Exception e) {
 		}

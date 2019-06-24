@@ -196,13 +196,10 @@ public class LineareAlgebra {
 		double sum1 = DRechnung.add(DRechnung.add(a, b), c);
 		double sum2 = DRechnung.add(DRechnung.add(-d, -e), -f);
 		return DRechnung.add(sum1, sum2);
-		// return a + b + c - d - e - f;
 	}
 
 	public static Vektor2D abs(Vektor2D vsrc) throws Exception {
 		Vektor2D v = new Vektor2D(vsrc);
-		//if ((v.x == DRechnung.MIN) || (v.y == DRechnung.MIN))
-		//	throw new Exception("nicht darstellbar");
 		if (v.x < 0)
 			v.x = -v.x;
 		if (v.y < 0)
@@ -212,8 +209,6 @@ public class LineareAlgebra {
 
 	public static Vektor3D abs(Vektor3D vsrc) throws Exception {
 		Vektor3D v = new Vektor3D(vsrc);
-		//if ((v.x == DRechnung.MIN) || (v.y == DRechnung.MIN) || (v.z == DRechnung.MIN))
-		//	throw new Exception("nicht darstellbar");
 		if (v.x < 0)
 			v.x = -v.x;
 		if (v.y < 0)

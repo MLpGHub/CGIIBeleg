@@ -30,11 +30,6 @@ public class DRechnung {
 		if (Math.abs(a) > Math.abs(MAX / b)) {
 			throw new Exception("Double Overflow");
 		}
-		/*
-		if (a < MIN / b) {
-			throw new Exception("Double Underflow");
-		}
-		*/
 		return a * b;
 	}
 

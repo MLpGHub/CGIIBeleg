@@ -53,22 +53,15 @@ public class Vogel extends BeweglichesObjekt {
 		if (model != null) {
 			glBegin(GL_TRIANGLES);
 			for (int i = 0; i < model.faces.size(); i++) {
-				Vector3f v1 = model.vertices.get(model.faces.get(i).verticeIndices.get(0));
-				Vector3f v2 = model.vertices.get(model.faces.get(i).verticeIndices.get(0));
-				Vector3f v3 = model.vertices.get(model.faces.get(i).verticeIndices.get(0));
+				Vector3f v1 = model.vertices.get(model.faces.get(i).verticeIndices.get(0)-1);
+				Vector3f v2 = model.vertices.get(model.faces.get(i).verticeIndices.get(1)-1);
+				Vector3f v3 = model.vertices.get(model.faces.get(i).verticeIndices.get(2)-1);
 				glVertex3f(v1.x, v1.y, v1.z);
 				glVertex3f(v2.x, v2.y, v2.z);
 				glVertex3f(v3.x, v3.y, v3.z);
-				/*
-				System.out.println("v1[" + v1.x + ", " + v1.y + ", " + v1.z + "]");
-				System.out.println("v2[" + v2.x + ", " + v2.y + ", " + v2.z + "]");
-				System.out.println("v3[" + v3.x + ", " + v3.y + ", " + v3.z + "]");
-				*/
 			}
 			glEnd();
 		} else {
-			//POGL.renderObjectWithForces((float)pos.x, (float)pos.y, 3, new Vektor2D(speed.x, speed.y), new Vektor2D());
-			
 			float size = 8;
 			glLoadIdentity();
 			glTranslated(pos.x, pos.y, 0);
@@ -76,16 +69,9 @@ public class Vogel extends BeweglichesObjekt {
 			glRotatef((float)angle, 0, 0, 1.f);
 			
 			glBegin(GL_TRIANGLES);
-			
 			glVertex3f(0, 0.5f, 0);
 			glVertex3f(0, -0.5f, 0);
 			glVertex3f(1.f, 0, 0);
-			
-			/*
-			glVertex3f(-(float)Math.sin(angle) * 0.5f, (float)Math.sin(angle) * 0.5f, 0);
-			glVertex3f(-(float)Math.sin(angle) * (-0.5f), (float)Math.sin(angle) * (-0.5f), 0);
-			glVertex3f((float)Math.cos(angle) * 1.f, (float)Math.sin(angle) * 1.f, 0);
-			*/
 			glEnd();
 			
 		}

@@ -45,19 +45,19 @@ public class Vogelsimulation extends LWJGLFenster {
 		schwarm = Vogelschwarm.getInstance();
 		Model vogelModell = null;
 		try {
-			vogelModell = OBJLoader.loadModel(new File("obj/adler1.obj"));
+			vogelModell = OBJLoader.loadModel(new File("obj/moeve.obj"));
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		grosserVogel = new Raubvogel(0, new Vektor3D(r.nextInt(WIDTH), r.nextInt(HEIGHT), 0), new Vektor3D(), null); //vogelModell
-		grosserVogel.verhalten = new Raubvogelverhalten(grosserVogel, schwarm, 0.01, 0.05);
+		Vektor3D rpos = new Vektor3D(r.nextInt(WIDTH), r.nextInt(HEIGHT), 0);
+		Vektor3D rspe = new Vektor3D(WIDTH/2 - rpos.x, HEIGHT/2 - rpos.y, 0);
+		grosserVogel = new Raubvogel(0, rpos, rspe, vogelModell);
+		grosserVogel.verhalten = new Raubvogelverhalten(grosserVogel, schwarm, 0.04, 0.2);
 		for (int i = 0; i < 200; i++) {
-			//Vektor3D pos = new Vektor3D(0, 0, 0);
 			Vektor3D pos = new Vektor3D(r.nextInt(WIDTH), r.nextInt(HEIGHT), 0);
-			//System.out.println(pos.x + ", " + pos.y);
 			Vektor3D speed = new Vektor3D(r.nextDouble(0.5), r.nextDouble(0.5), 0);
-			Vogel v = new Vogel(i, pos, speed, schwarm, null);
-			v.verhalten = new Schwarmverhalten(v, grosserVogel, 20, 0.05, 1.5, true); //v, 20, 0.05, 3, true
+			Vogel v = new Vogel(i, pos, speed, schwarm, null); //null -> model
+			v.verhalten = new Schwarmverhalten(v, grosserVogel, 20, 0.05, 1.5, true);
 			schwarm.add(v);
 		}
 		initDisplay();
@@ -90,7 +90,6 @@ public class Vogelsimulation extends LWJGLFenster {
 	
 	public void renderLoop() {
 		prepareShader();
-		glEnable(GL_DEPTH_TEST);
 		
 		while (!Display.isCloseRequested()) {
 			glClearColor(0.4941f, 0.7529f, 0.9333f, 1);

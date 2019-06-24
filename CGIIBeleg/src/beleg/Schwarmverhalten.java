@@ -28,7 +28,6 @@ public class Schwarmverhalten implements Verhalten {
 			Vogel v = vogel.schwarm.getVogel(i);
 			try {
 				double ed = LineareAlgebra.euklDistance(vogel.pos, v.pos);
-				//if (ed == 0) System.out.println("collision");
 				if (ed < dist * 2. / 3.)
 					force.add(LineareAlgebra.sub(vogel.pos, v.pos));
 			} catch (Exception e) {
@@ -38,8 +37,6 @@ public class Schwarmverhalten implements Verhalten {
 			force.normalize();
 		} catch (Exception e) {
 		}
-		
-		//if (vogel.id == 0) System.out.println("seperation[" + force.x + ", " + force.y + ", " + force.z + "]");
 		return force;
 	}
 
@@ -58,8 +55,6 @@ public class Schwarmverhalten implements Verhalten {
 			force.normalize();
 		} catch (Exception e) {
 		}
-		
-		//if (vogel.id == 0) System.out.println("ausrichtung[" + force.x + ", " + force.y + ", " + force.z + "]");
 		return force;
 	}
 
@@ -78,8 +73,6 @@ public class Schwarmverhalten implements Verhalten {
 			force.normalize();
 		} catch (Exception e) {
 		}
-		
-		//if (vogel.id == 0) System.out.println("zusammenhalt[" + force.x + ", " + force.y + ", " + force.z + "]");
 		return force;
 	}
 	
@@ -103,12 +96,6 @@ public class Schwarmverhalten implements Verhalten {
 			if (dis < max) {
 				force.add(LineareAlgebra.sub(vogel.pos, raubvogel.pos));
 				force.normalize();
-				/*
-				dis = -dis + max;
-				if (dis >= 20)  {
-					force.mult((double) dis / (double) max);
-				}
-				*/
 			}
 		} catch (Exception e) {
 		}
@@ -129,11 +116,11 @@ public class Schwarmverhalten implements Verhalten {
 		Vektor3D raubvogel = flieheVorRaubvogel();
 		
 		try {
-			maus.mult(0.8); // 0.8
-			seperation.mult(1.0); // 1.0
-			ausrichtung.mult(0.12); // 0.12
-			zusammenhalt.mult(0.01); // 0.01
-			raubvogel.mult(10.0); //??
+			maus.mult(0.8);
+			seperation.mult(1.0);
+			ausrichtung.mult(0.12);
+			zusammenhalt.mult(0.01);
+			raubvogel.mult(10.0);
 			
 			if (followMouse) accel.add(maus);
 			accel.add(seperation);
@@ -145,7 +132,6 @@ public class Schwarmverhalten implements Verhalten {
 			
 			double length = vogel.speed.length();
 			
-			//max bzw. min speed evtl. hier
 			vogel.speed = LineareAlgebra.mult(LineareAlgebra.normalize(vogel.speed), max_speed);
 			
 			vogel.pos.add(vogel.speed);

@@ -5,9 +5,6 @@ import java.util.ArrayList;
 
 import org.lwjgl.util.vector.Vector3f;
 
-//http://paulbourke.net/dataformats/obj/
-//https://www.youtube.com/watch?v=izKAvSV3qk0&list=PL19F2453814E0E315&index=24
-
 public class OBJLoader {
 	private OBJLoader() {
 	};
@@ -29,10 +26,10 @@ public class OBJLoader {
 				m.normals.add(new Vector3f(x, y, z));
 			} else if (line.startsWith("f ")) {
 				ArrayList<Integer> vertexIndices = new ArrayList<Integer>();
-				vertexIndices.add(Integer.valueOf(line.split(" ")[1].split("//")[0]));
-				vertexIndices.add(Integer.valueOf(line.split(" ")[2].split("//")[0]));
-				vertexIndices.add(Integer.valueOf(line.split(" ")[3].split("//")[0]));
-				int normalIndex = Integer.valueOf(line.split(" ")[1].split("//")[1]);
+				vertexIndices.add(Integer.valueOf(line.split(" ")[1].split("/")[0]));
+				vertexIndices.add(Integer.valueOf(line.split(" ")[2].split("/")[0]));
+				vertexIndices.add(Integer.valueOf(line.split(" ")[3].split("/")[0]));
+				int normalIndex = Integer.valueOf(line.split(" ")[1].split("/")[2]);
 				m.faces.add(new Face(vertexIndices, normalIndex));
 			}
 		}

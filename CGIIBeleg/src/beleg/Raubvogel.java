@@ -24,19 +24,15 @@ public class Raubvogel extends BeweglichesObjekt {
 	
 	@Override
 	public void render() {
-		//POGL.renderObjectWithForces((float)pos.x, (float)pos.y, 5, new Vektor2D(speed.x, speed.y), new Vektor2D());
-
 		int angle = 0;
-		
 		try {
 			angle = (int)LineareAlgebra.angleDegree(new Vektor3D(1, 0, 0), speed);
 			if (speed.y < 0) angle = 360 - angle;
-			
 		} catch (Exception e) {
 		}
 		
 		if (model != null) {
-			int size = 5;
+			int size = 25;
 			glLoadIdentity();
 			glTranslated(pos.x, pos.y, 0);
 			glScaled(size, size, size);
@@ -44,12 +40,28 @@ public class Raubvogel extends BeweglichesObjekt {
 			
 			glBegin(GL_TRIANGLES);
 			for (int i = 0; i < model.faces.size(); i++) {
-				//System.out.println("v1[" + v1.x + ", " + v1.y + ", " + v1.z + "]");
-				//System.out.println("v2[" + v2.x + ", " + v2.y + ", " + v2.z + "]");
-				//System.out.println("v3[" + v3.x + ", " + v3.y + ", " + v3.z + "]");
-				Vector3f v1 = model.vertices.get(model.faces.get(i).verticeIndices.get(0)); //IndexOutOfBoundsException
-				Vector3f v2 = model.vertices.get(model.faces.get(i).verticeIndices.get(1));
-				Vector3f v3 = model.vertices.get(model.faces.get(i).verticeIndices.get(2));
+				Vector3f v1 = null;
+				Vector3f v2 = null;
+				Vector3f v3 = null;
+				Face f = model.faces.get(i);
+				try {
+					int index = f.verticeIndices.get(0);
+					v1 = model.vertices.get(index-1);
+				} catch (IndexOutOfBoundsException iobe) {
+					System.out.println("v1");
+				}
+				try {
+					int index = f.verticeIndices.get(1);
+					v2 = model.vertices.get(index-1);
+				} catch (IndexOutOfBoundsException iobe) {
+					System.out.println("v2");
+				}
+				try {
+					int index = f.verticeIndices.get(2);
+					v3 = model.vertices.get(index-1);
+				} catch (IndexOutOfBoundsException iobe) {
+					System.out.println("v3, " + i + ", size: " + model.faces.size());
+				}
 				glVertex3f(v1.x, v1.y, v1.z);
 				glVertex3f(v2.x, v2.y, v2.z);
 				glVertex3f(v3.x, v3.y, v3.z);
